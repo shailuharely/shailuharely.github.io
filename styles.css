@@ -269,3 +269,14 @@ dialog img{width:100%}
   .js .reveal{opacity:1;transform:none}
   .arrow.fly{transition:none!important}
 }
+
+/* CrazyLabs graduation */
+.grad{margin-top:2.5rem}
+.grad h3{font-size:1.5rem}
+.grad-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grad figure{background:var(--surface);border:2px solid var(--ink);border-radius:20px;box-shadow:0 6px 0 var(--ink);padding:.75rem}
+.grad button{display:block;width:100%;border:0;background:none;padding:0;border-radius:12px;overflow:hidden}
+.grad img{width:100%;aspect-ratio:1152/811;object-fit:cover;transition:transform .35s var(--ease)}
+.grad button:hover img{transform:scale(1.04)}
+.grad figcaption{margin-top:.6rem;font-weight:700;font-size:.9rem;text-align:center}
+@media (max-width:700px){.grad-grid{grid-template-columns:1fr}}

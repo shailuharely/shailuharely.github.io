@@ -24,7 +24,8 @@ if (form) {
 // Click a case-study image to enlarge it
 const box = document.getElementById('lightbox');
 if (box) {
-  document.querySelectorAll('img.zoom').forEach(img => img.addEventListener('click', () => {
+  document.querySelectorAll('.zoom').forEach(target => target.addEventListener('click', () => {
+    const img = target.matches('img') ? target : target.querySelector('img');
     const big = box.querySelector('img');
     big.src = img.src; big.alt = img.alt; box.showModal();
   }));
@@ -86,7 +87,7 @@ const revealer = new IntersectionObserver(entries => entries.forEach(e => {
   };
   requestAnimationFrame(step);
 }), { threshold: 0.12 });
-document.querySelectorAll('.stats>div, .logos, main h2, .feature, .role-box li, .games .card, .console, .bento .card, .timeline li, .quote, .contact, .challenge, .case figure')
+document.querySelectorAll('.stats>div, .logos, main h2, .feature, .role-box li, .games .card, .console, .bento .card, .timeline li, .quote, .contact, .challenge, .case figure, .grad figure')
   .forEach((el, i) => {
     el.classList.add('reveal');
     el.style.transitionDelay = (i % 4) * 60 + 'ms';
