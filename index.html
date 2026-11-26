@@ -11,10 +11,10 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%236952F5' d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z'/></svg>">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
   <script>document.documentElement.classList.add('js')</script>
-  <script src="main.js?v=5" defer></script>
-  <script src="arcade.js?v=5" defer></script>
+  <script src="main.js?v=6" defer></script>
+  <script src="arcade.js?v=6" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -105,21 +105,21 @@
         <span class="tag">Sorting puzzle</span>
         <h3>Sand Mania</h3>
         <p>Tap 3D sand objects and turn them into flowing sand that fills buckets on a conveyor.</p>
-        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.sandmania" target="_blank" rel="noopener" aria-label="Sand Mania on Google Play">Google Play ↗</a><a href="#play" data-demo="sort">▶ Sorting demo</a></div>
+        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.sandmania" target="_blank" rel="noopener" aria-label="Sand Mania on Google Play">Google Play ↗</a></div>
       </li>
       <li class="card">
         <a class="icon-link" href="https://play.google.com/store/apps/details?id=com.meemeegames.archeryshooter" target="_blank" rel="noopener" aria-label="Open Archery Shooter on Google Play"><img src="assets/games/archery-shooter.webp" alt="" width="512" height="512" loading="lazy"></a>
         <span class="tag">Archery</span>
         <h3>Archery Shooter</h3>
         <p>Aim and shoot fruit and targets while avoiding the people nearby.</p>
-        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.archeryshooter" target="_blank" rel="noopener" aria-label="Archery Shooter on Google Play">Google Play ↗</a><a href="#play" data-demo="archery">▶ Aiming demo</a></div>
+        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.archeryshooter" target="_blank" rel="noopener" aria-label="Archery Shooter on Google Play">Google Play ↗</a></div>
       </li>
       <li class="card">
         <a class="icon-link" href="https://play.google.com/store/apps/details?id=com.meemeegames.connectracing" target="_blank" rel="noopener" aria-label="Open Connect Racing on Google Play"><img src="assets/games/connect-racing.png" alt="" width="512" height="512" loading="lazy"></a>
         <span class="tag">Puzzle racing</span>
         <h3>Connect Racing</h3>
         <p>Link same-colour balls to complete objectives and collect fuel for your bike.</p>
-        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.connectracing" target="_blank" rel="noopener" aria-label="Connect Racing on Google Play">Google Play ↗</a><a href="#play" data-demo="connect">▶ Linking demo</a></div>
+        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.connectracing" target="_blank" rel="noopener" aria-label="Connect Racing on Google Play">Google Play ↗</a></div>
       </li>
       <li class="card">
         <a class="icon-link" href="https://play.google.com/store/apps/details?id=com.meemeegames.emojijoy" target="_blank" rel="noopener" aria-label="Open Emoji Joy on Google Play"><img src="assets/games/emoji-joy.webp" alt="" width="512" height="512" loading="lazy"></a>
@@ -152,7 +152,7 @@
       <li class="card next-card">
         <span class="big" aria-hidden="true">▶</span>
         <h3>Your turn to play</h3>
-        <p>Four quick browser demos.</p>
+        <p>Two quick browser puzzles.</p>
         <a class="btn lime" href="#play">Open the arcade</a>
       </li>
     </ul>
@@ -162,51 +162,35 @@
     <div class="wrap">
       <p class="eyebrow">Playground</p>
       <h2>Play the mechanics</h2>
-      <p class="sub">Small web demos inspired by these genres. They are not the shipped games or their real levels.</p>
+      <p class="sub">Two small puzzles made for this portfolio. They are not shipped games.</p>
       <div class="tabs" role="tablist" aria-label="Mini-games">
-        <button role="tab" id="tab-sort" aria-controls="panel-sort" aria-selected="true">Colour Sort</button>
-        <button role="tab" id="tab-connect" aria-controls="panel-connect" aria-selected="false" tabindex="-1">Connect Fuel</button>
-        <button role="tab" id="tab-archery" aria-controls="panel-archery" aria-selected="false" tabindex="-1">Melon Shot</button>
-        <button role="tab" id="tab-category" aria-controls="panel-category" aria-selected="false" tabindex="-1">Category Match</button>
+        <button role="tab" id="tab-twins" aria-controls="panel-twins" aria-selected="true">Mirror Twins</button>
+        <button role="tab" id="tab-mix" aria-controls="panel-mix" aria-selected="false" tabindex="-1">Light Mixer</button>
       </div>
 
       <div class="sound-row"><button type="button" class="btn ghost small" id="sound" aria-pressed="false">🔇 Sound off</button></div>
 
       <div class="console">
-        <div role="tabpanel" id="panel-sort" aria-labelledby="tab-sort">
-          <p class="how">Tap a tube, then tap another to move the top ball. Give each colour its own tube.</p>
-          <div class="hud"><span>Level: <b id="sort-level">1</b></span><span>Moves: <b id="sort-moves">0</b></span><span>Best: <b id="sort-best">–</b></span><button type="button" class="btn small ghost" id="sort-undo">↶ Undo</button><button type="button" class="btn small ghost" id="sort-reset">New puzzle</button></div>
-          <div class="tubes" id="tubes"></div>
-          <p class="status" id="sort-status" role="status"></p>
-          <button type="button" class="btn lime wide" id="sort-next" hidden>Next level →</button>
-        </div>
-
-        <div role="tabpanel" id="panel-connect" aria-labelledby="tab-connect" hidden>
-          <p class="how">Drag or tap across 3 or more touching balls of one colour. Fill the tank in 10 moves. Chains of 5 or more earn 2 bonus fuel.</p>
-          <div class="hud"><span>Moves left: <b id="con-moves">10</b></span><span>Best finish: <b id="con-best">–</b></span><button type="button" class="btn small" id="con-pop">Pop chain</button><button type="button" class="btn small ghost" id="con-reset">Restart</button></div>
-          <div class="road"><span id="bike" aria-hidden="true">🏍️</span><span class="flag" aria-hidden="true">🏁</span><i id="fuel"></i></div>
-          <div class="balls" id="balls"></div>
-          <p class="status" id="con-status" role="status"></p>
-        </div>
-
-        <div role="tabpanel" id="panel-archery" aria-labelledby="tab-archery" hidden>
-          <p class="how">Shoot just before the melon reaches the dashed line, because the arrow takes a moment to arrive. Don't hit the bystanders.</p>
-          <div class="hud"><span>Score: <b id="arc-score">0</b></span><span>Arrows: <b id="arc-arrows">5</b></span><span>Best: <b id="arc-best">–</b></span></div>
-          <div class="range" id="range">
-            <div class="mover" id="mover"><span class="person" aria-hidden="true">🧍</span><span class="melon" aria-hidden="true">🍉</span><span class="person" aria-hidden="true">🧍</span></div>
-            <span class="arrow" id="arrow" aria-hidden="true"></span>
-            <span class="bow" aria-hidden="true">🏹</span>
+        <div role="tabpanel" id="panel-twins" aria-labelledby="tab-twins">
+          <p class="how">One control moves both twins. Up and down match; left and right are mirrored. Get A and B to their homes at the same time.</p>
+          <div class="hud"><span>Level: <b id="twins-level"></b></span><span>Moves: <b id="twins-moves">0</b></span><span>Best: <b id="twins-best">–</b></span><button type="button" class="btn small ghost" id="twins-undo">↶ Undo</button><button type="button" class="btn small ghost" id="twins-reset">Restart</button></div>
+          <div class="twins-board" id="twins-board" role="img" tabindex="0"></div>
+          <div class="pad" aria-label="Move the twins. Directions are for twin A.">
+            <button type="button" class="btn ghost" data-move="up" aria-label="Up">▲</button>
+            <button type="button" class="btn ghost" data-move="left" aria-label="Left for A, right for B">◀</button>
+            <button type="button" class="btn ghost" data-move="down" aria-label="Down">▼</button>
+            <button type="button" class="btn ghost" data-move="right" aria-label="Right for A, left for B">▶</button>
           </div>
-          <button type="button" class="btn lime wide" id="arc-shoot">Start</button>
-          <p class="status" id="arc-status" role="status"></p>
+          <p class="status" id="twins-status" role="status"></p>
+          <button type="button" class="btn lime wide" id="twins-next" hidden>Next level →</button>
         </div>
 
-        <div role="tabpanel" id="panel-category" aria-labelledby="tab-category" hidden>
-          <p class="how">Pick a card, then pick the group it belongs to.</p>
-          <div class="hud"><span>Moves: <b id="moves">0</b></span><span>Mistakes: <b id="mistakes">0</b></span><span>Fewest mistakes: <b id="cat-best">–</b></span><button type="button" id="restart" class="btn small ghost">Restart</button></div>
-          <div class="board" id="board" aria-label="Cards to sort"></div>
-          <div class="bins" id="bins"></div>
-          <p class="status" id="status" role="status"></p>
+        <div role="tabpanel" id="panel-mix" aria-labelledby="tab-mix" hidden>
+          <p class="how">Drag the lamps until every spot gets exactly the colour on its label.</p>
+          <div class="hud"><span>Level: <b id="mix-level"></b></span><span>Spots correct: <b id="mix-count"></b></span><button type="button" class="btn small ghost" id="mix-reset">Restart</button></div>
+          <div class="mix-stage" id="mix-stage"></div>
+          <p class="status" id="mix-status" role="status"></p>
+          <button type="button" class="btn lime wide" id="mix-next" hidden>Next level →</button>
         </div>
       </div>
     </div>

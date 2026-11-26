@@ -1,28 +1,23 @@
-// Playable demos: tabs, Colour Sort, Connect Fuel, Melon Shot.
-// (Category Match lives in main.js.)
+// Playable demos: Mirror Twins and Light Mixer.
 (() => {
   const $ = id => document.getElementById(id);
-  const random = n => Math.floor(Math.random() * n);
-  const SHAPES = ['●', '▲', '■', '★'];
-  const NAMES = ['coral circle', 'blue triangle', 'lime square', 'purple star'];
 
   /* Best scores, kept on the visitor's own device */
   const readBest = key => {
     try { const v = localStorage.getItem('pf-best-' + key); return v === null ? null : Number(v); } catch { return null; }
   };
   const showBest = (key, id) => { const v = readBest(key); $(id).textContent = v === null ? '–' : v; };
-  window.saveBest = (key, value, lowerWins, id) => {
+  const saveBest = (key, value, id) => {
     const old = readBest(key);
-    if (old !== null && (lowerWins ? value >= old : value <= old)) return;
+    if (old !== null && value >= old) return;
     try { localStorage.setItem('pf-best-' + key, value); } catch { /* storage can be blocked */ }
     $(id).textContent = value;
   };
-  showBest('connect', 'con-best'); showBest('archery', 'arc-best'); showBest('category', 'cat-best');
 
   /* Sound: synthesised, and off until the visitor turns it on */
   let audio = null, soundOn = false;
   const TUNES = { tap: [440], good: [523, 784], bad: [196, 147], win: [523, 659, 784, 1047] };
-  window.sfx = name => {
+  const sfx = name => {
     if (!soundOn || !audio) return;
     TUNES[name].forEach((pitch, i) => {
       const osc = audio.createOscillator(), gain = audio.createGain(), at = audio.currentTime + i * 0.09;
@@ -38,12 +33,11 @@
     if (soundOn && audio) audio.resume();
     $('sound').textContent = soundOn ? '🔊 Sound on' : '🔇 Sound off';
     $('sound').setAttribute('aria-pressed', soundOn);
-    window.sfx('good');
+    sfx('good');
   });
 
   /* Tabs */
   const tabs = [...document.querySelectorAll('[role=tab]')];
-  let stopArchery = () => {};
   function openTab(tab) {
     tabs.forEach(t => {
       const on = t === tab;
@@ -51,7 +45,6 @@
       t.tabIndex = on ? 0 : -1;
       $(t.getAttribute('aria-controls')).hidden = !on;
     });
-    if (tab.id !== 'tab-archery') stopArchery();
   }
   tabs.forEach((tab, i) => {
     tab.addEventListener('click', () => openTab(tab));
@@ -62,310 +55,191 @@
       openTab(next); next.focus();
     });
   });
-  document.querySelectorAll('[data-demo]').forEach(link =>
-    link.addEventListener('click', () => openTab($('tab-' + link.dataset.demo))));
 
-  /* Colour Sort */
+  /* Mirror Twins: one control moves both twins; left and right are mirrored */
   (() => {
-    const SIZE = 4;
-    let tubes, picked, moves, won, history, buttons, level = 1;
-    const solved = state => state.every(t => !t.length || (t.length === SIZE && t.every(b => b === t[0])));
-    const canMove = (state, a, b) => a !== b && state[a].length > 0 && state[b].length < SIZE &&
-      (!state[b].length || state[b][state[b].length - 1] === state[a][state[a].length - 1]);
+    const N = 6;
+    // par is the fewest moves possible, found by searching every position
+    const LEVELS = [
+      { walls: [6, 29, 33], a: 24, b: 34, goalA: 31, goalB: 28, par: 6, hint: 'Press right: one twin goes right, its mirror goes left.' },
+      { walls: [9, 15, 17, 19, 26, 34], a: 1, b: 29, goalA: 31, goalB: 23, par: 11, hint: 'A wall stops only the twin that hits it. Use that to pull them apart.' },
+      { walls: [4, 7, 13, 18, 21, 24, 26, 30], a: 25, b: 15, goalA: 0, goalB: 33, par: 15, hint: 'Plan which twin should wait against a wall.' }
+    ];
+    const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
+    const board = $('twins-board');
+    let index = 0, level, a, b, moves, history, won;
 
-    // Search every line of play so that only winnable puzzles are dealt
-    function solvable(start) {
-      const seen = new Set();
-      const stack = [start];
-      while (stack.length && seen.size < 150000) {
-        const state = stack.pop();
-        if (solved(state)) return true;
-        for (let a = 0; a < state.length; a++) for (let b = 0; b < state.length; b++) {
-          if (!canMove(state, a, b)) continue;
-          const next = state.map(t => t.slice());
-          next[b].push(next[a].pop());
-          const key = next.map(t => t.join('')).sort().join('|');
-          if (!seen.has(key)) { seen.add(key); stack.push(next); }
-        }
-      }
-      return false;
-    }
+    const cells = Array.from({ length: N * N }, () => board.appendChild(document.createElement('span')));
+    const twinA = board.appendChild(document.createElement('i'));
+    const twinB = board.appendChild(document.createElement('i'));
+    twinA.className = 'twin a'; twinA.textContent = 'A';
+    twinB.className = 'twin b'; twinB.textContent = 'B';
 
-    function deal() {
-      let state;
-      do {
-        // Level 1 has three colours; later levels have four
-        const colours = level === 1 ? 3 : 4;
-        const balls = Array.from({ length: colours }, (_, c) => Array(SIZE).fill(c)).flat();
-        for (let i = balls.length - 1; i > 0; i--) { const j = random(i + 1); [balls[i], balls[j]] = [balls[j], balls[i]]; }
-        state = Array.from({ length: colours }, (_, i) => balls.slice(i * SIZE, (i + 1) * SIZE)).concat([[], []]);
-      } while (solved(state) || !solvable(state));
-      return state;
-    }
-
-    function build(count) {
-      $('tubes').textContent = '';
-      buttons = Array.from({ length: count }, (_, i) => {
-        const button = document.createElement('button');
-        button.type = 'button'; button.className = 'tube';
-        button.addEventListener('click', () => tap(i));
-        $('tubes').appendChild(button);
-        return button;
-      });
-    }
-
-    function draw(dropped) {
-      buttons.forEach((button, i) => {
-        button.textContent = '';
-        tubes[i].forEach((c, n) => {
-          const ball = document.createElement('span');
-          ball.className = 'ball c' + c + (i === dropped && n === tubes[i].length - 1 ? ' drop' : '');
-          ball.textContent = SHAPES[c];
-          button.appendChild(ball);
-        });
-        button.classList.toggle('done', tubes[i].length === SIZE && tubes[i].every(b => b === tubes[i][0]));
-        button.setAttribute('aria-pressed', picked === i);
-        button.setAttribute('aria-label', 'Tube ' + (i + 1) + ': ' +
-          (tubes[i].length ? tubes[i].map(c => NAMES[c]).reverse().join(', ') + ' (top first)' : 'empty'));
-      });
-      $('sort-moves').textContent = moves;
-      $('sort-level').textContent = level;
-      $('sort-undo').disabled = won || !history.length;
-    }
-
-    function tap(i) {
-      if (won) return;
-      const status = $('sort-status');
-      status.textContent = '';
-      if (picked === null) { if (tubes[i].length) picked = i; return draw(); }
-      if (picked === i) { picked = null; return draw(); }
-      if (!canMove(tubes, picked, i)) {
-        picked = null; draw();
-        buttons[i].classList.remove('shake'); void buttons[i].offsetWidth; buttons[i].classList.add('shake');
-        status.textContent = 'That ball can only go on the same colour or into an empty tube.';
-        window.sfx('bad');
-        return;
-      }
-      history.push([picked, i]);
-      tubes[i].push(tubes[picked].pop());
-      picked = null; moves++;
-      won = solved(tubes);
-      draw(i);
-      if (won) {
-        status.textContent = 'Level ' + level + ' sorted in ' + moves + ' moves! 🎉';
-        window.saveBest('sort-' + Math.min(level, 2), moves, true, 'sort-best');
-        $('sort-next').hidden = false;
-        window.burst($('tubes')); window.sfx('win');
-      } else {
-        window.sfx('tap');
-        if (!tubes.some((_, a) => tubes.some((_, b) => canMove(tubes, a, b)))) status.textContent = 'No moves left. Undo or try a new puzzle.';
-      }
-    }
-
-    $('sort-undo').addEventListener('click', () => {
-      if (won || !history.length) return;
-      const [from, to] = history.pop();
-      tubes[from].push(tubes[to].pop());
-      picked = null; moves++; $('sort-status').textContent = 'Move undone.'; draw(from);
-    });
-
-    function reset() {
-      tubes = deal(); picked = null; moves = 0; won = false; history = [];
-      build(tubes.length);
-      $('sort-status').textContent = ''; $('sort-next').hidden = true;
-      showBest('sort-' + Math.min(level, 2), 'sort-best'); draw();
-    }
-    $('sort-reset').addEventListener('click', reset);
-    $('sort-next').addEventListener('click', () => { level++; reset(); buttons[0].focus(); });
-    reset();
-  })();
-
-  /* Connect Fuel */
-  (() => {
-    const W = 6, GOAL = 24, MOVES = 10;
-    let grid, chain, moves, fuel, dragging, dragged;
-    const board = $('balls');
-    const adjacent = (a, b) => a !== b && Math.abs(a % W - b % W) <= 1 && Math.abs(Math.floor(a / W) - Math.floor(b / W)) <= 1;
-
-    // Is there any group of 3 or more touching balls of one colour?
-    function hasMove() {
-      const seen = new Set();
-      return grid.some((colour, start) => {
-        if (seen.has(start)) return false;
-        const group = [start]; seen.add(start);
-        for (let n = 0; n < group.length; n++) grid.forEach((c, j) => {
-          if (c === colour && !seen.has(j) && adjacent(group[n], j)) { seen.add(j); group.push(j); }
-        });
-        return group.length >= 3;
-      });
-    }
-
-    const cells = Array.from({ length: W * W }, (_, i) => {
-      const cell = document.createElement('button');
-      cell.type = 'button'; cell.dataset.i = i;
-      board.appendChild(cell);
-      // Keyboard activation (Enter or Space) arrives as a click with detail 0
-      cell.addEventListener('click', e => { if (e.detail === 0) press(i); });
-      return cell;
-    });
-
-    function draw(fresh = []) {
-      cells.forEach((cell, i) => {
-        cell.className = 'ball c' + grid[i] + (chain.includes(i) ? ' sel' : '') + (fresh.includes(i) ? ' fall' : '');
-        cell.textContent = SHAPES[grid[i]];
-        cell.setAttribute('aria-label', NAMES[grid[i]] + ', row ' + (Math.floor(i / W) + 1) + ', column ' + (i % W + 1));
-        cell.setAttribute('aria-pressed', chain.includes(i));
-      });
-      $('con-moves').textContent = moves;
-      const done = Math.min(fuel / GOAL, 1) * 100;
-      $('fuel').style.width = done + '%';
-      $('bike').style.left = 'calc(' + done + '% - ' + (done * 0.62) + 'px)';
-    }
-
-    const over = () => fuel >= GOAL || moves <= 0;
-    const fits = i => {
-      const last = chain[chain.length - 1];
-      return !chain.includes(i) && grid[i] === grid[last] && adjacent(i, last);
+    const slide = (pos, dx, dy) => {
+      const x = pos % N + dx, y = Math.floor(pos / N) + dy, to = y * N + x;
+      return x < 0 || y < 0 || x >= N || y >= N || level.walls.includes(to) ? pos : to;
     };
+    const place = (el, pos) => { el.style.left = (pos % N) * 100 / N + '%'; el.style.top = Math.floor(pos / N) * 100 / N + '%'; };
+    const where = pos => 'row ' + (Math.floor(pos / N) + 1) + ' column ' + (pos % N + 1);
 
-    function press(i) {
-      if (over()) return;
-      if (chain.length >= 3 && chain[chain.length - 1] === i) return pop();
-      if (chain.length && fits(i)) chain.push(i);
-      else chain = chain.length === 1 && chain[0] === i ? [] : [i];
-      $('con-status').textContent = chain.length >= 3 ? chain.length + ' linked. Pop it!' : '';
-      window.sfx('tap');
+    function draw() {
+      place(twinA, a); place(twinB, b);
+      twinA.classList.toggle('home', a === level.goalA);
+      twinB.classList.toggle('home', b === level.goalB);
+      $('twins-level').textContent = (index + 1) + ' of ' + LEVELS.length;
+      $('twins-moves').textContent = moves;
+      $('twins-undo').disabled = won || !history.length;
+      board.setAttribute('aria-label', 'Twin A at ' + where(a) + ', home at ' + where(level.goalA) +
+        '. Twin B at ' + where(b) + ', home at ' + where(level.goalB) + '. Walls at ' + level.walls.map(where).join(', '));
+    }
+
+    function load() {
+      level = LEVELS[index]; a = level.a; b = level.b; moves = 0; history = []; won = false;
+      cells.forEach((cell, i) => {
+        cell.className = level.walls.includes(i) ? 'wall' : i === level.goalA ? 'goal a' : i === level.goalB ? 'goal b' : '';
+        cell.textContent = i === level.goalA ? 'A' : i === level.goalB ? 'B' : '';
+      });
+      $('twins-status').textContent = level.hint;
+      $('twins-next').hidden = true;
+      showBest('twins-' + index, 'twins-best');
       draw();
     }
 
-    function pop() {
-      if (over()) return;
-      if (chain.length < 3) { $('con-status').textContent = 'Link at least 3 balls.'; return; }
-      const bonus = chain.length >= 5 ? 2 : 0;
-      moves--; fuel += chain.length + bonus;
-      const gone = new Set(chain), fresh = [];
-      for (let x = 0; x < W; x++) {
-        const keep = [];
-        for (let y = W - 1; y >= 0; y--) if (!gone.has(y * W + x)) keep.push(grid[y * W + x]);
-        for (let y = W - 1, n = 0; y >= 0; y--, n++) {
-          if (n < keep.length) grid[y * W + x] = keep[n];
-          else { grid[y * W + x] = random(4); fresh.push(y * W + x); }
-        }
-      }
-      while (!hasMove()) grid = grid.map(() => random(4));
-      const size = chain.length;
-      chain = []; draw(fresh);
-      if (fuel >= GOAL) {
-        const used = MOVES - moves;
-        $('con-status').textContent = 'Finish line in ' + used + ' moves! ' + '⭐'.repeat(used <= 3 ? 3 : used <= 5 ? 2 : 1);
-        window.saveBest('connect', used, true, 'con-best');
-        window.burst(board); window.sfx('win');
-      } else if (!moves) {
-        $('con-status').textContent = 'Out of moves at ' + Math.round(fuel / GOAL * 100) + '%. Try again.';
-        window.sfx('bad');
-      } else {
-        $('con-status').textContent = bonus ? 'Combo! +' + (size + bonus) + ' fuel' : '+' + size + ' fuel';
-        window.sfx('good');
-      }
+    function move(name) {
+      if (won) return;
+      const [dx, dy] = DIRS[name];
+      const nextA = slide(a, dx, dy), nextB = slide(b, -dx, dy);
+      if (nextA === a && nextB === b) { sfx('bad'); return; }
+      history.push([a, b]);
+      a = nextA; b = nextB; moves++;
+      won = a === level.goalA && b === level.goalB;
+      draw();
+      if (!won) return sfx('tap');
+      const stars = moves <= level.par ? 3 : moves <= level.par + 4 ? 2 : 1;
+      $('twins-status').textContent = 'Both home in ' + moves + ' moves! ' + '⭐'.repeat(stars) + ' Fewest possible: ' + level.par + '.';
+      saveBest('twins-' + index, moves, 'twins-best');
+      $('twins-next').textContent = index === LEVELS.length - 1 ? 'Play from level 1' : 'Next level →';
+      $('twins-next').hidden = false;
+      window.burst(board); sfx('win');
     }
 
-    board.addEventListener('pointerdown', e => {
-      const cell = e.target.closest('button');
-      if (!cell) return;
-      e.preventDefault();
-      dragging = true; dragged = false;
-      press(+cell.dataset.i);
+    document.querySelectorAll('[data-move]').forEach(button => button.addEventListener('click', () => move(button.dataset.move)));
+    $('panel-twins').addEventListener('keydown', e => {
+      const name = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' }[e.key];
+      if (name) { e.preventDefault(); move(name); }
     });
-    window.addEventListener('pointermove', e => {
-      if (!dragging || !chain.length || over()) return;
-      const cell = document.elementFromPoint(e.clientX, e.clientY)?.closest('#balls button');
-      if (!cell) return;
-      const i = +cell.dataset.i;
-      if (i === chain[chain.length - 2]) chain.pop();
-      else if (fits(i)) chain.push(i);
-      else return;
-      dragged = true; draw();
+    let start = null;
+    board.addEventListener('pointerdown', e => { start = [e.clientX, e.clientY]; board.setPointerCapture(e.pointerId); });
+    board.addEventListener('pointerup', e => {
+      if (!start) return;
+      const dx = e.clientX - start[0], dy = e.clientY - start[1];
+      start = null;
+      if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
+      move(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'));
     });
-    const release = () => {
-      if (dragging && dragged && chain.length >= 3) pop();
-      dragging = false;
-    };
-    window.addEventListener('pointerup', release);
-    window.addEventListener('pointercancel', () => { dragging = false; });
-
-    function reset() {
-      do grid = Array.from({ length: W * W }, () => random(4)); while (!hasMove());
-      chain = []; moves = MOVES; fuel = 0; $('con-status').textContent = ''; draw();
-    }
-    $('con-pop').addEventListener('click', pop);
-    $('con-reset').addEventListener('click', reset);
-    reset();
+    board.addEventListener('pointercancel', () => { start = null; });
+    $('twins-undo').addEventListener('click', () => {
+      if (won || !history.length) return;
+      [a, b] = history.pop(); moves++; draw(); sfx('tap');
+    });
+    $('twins-reset').addEventListener('click', load);
+    $('twins-next').addEventListener('click', () => { index = (index + 1) % LEVELS.length; load(); board.focus(); });
+    load();
   })();
 
-  /* Melon Shot */
+  /* Light Mixer: drag coloured lamps until every spot gets exactly the light it asks for */
   (() => {
-    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const button = $('arc-shoot'), mover = $('mover'), arrow = $('arrow'), status = $('arc-status');
-    const melon = mover.querySelector('.melon');
-    let running = false, flying = false, score, arrows, x = 0, phase = 0, last, frame, timer;
+    // The stage is 100 by 100 units and each lamp lights a circle of radius 26
+    const RADIUS = 26;
+    const NAMES = { r: 'red', g: 'green', b: 'blue' };
+    const MIXES = { r: ['Red', '#ff4d4d'], g: ['Green', '#3fe05a'], b: ['Blue', '#5b7cff'], rg: ['Yellow', '#ffe94d'], rb: ['Pink', '#ff5cf0'], gb: ['Cyan', '#4df3ff'], rgb: ['White', '#ffffff'], '': ['Keep dark', '#171822'] };
+    const LEVELS = [
+      { lamps: 'rg', targets: [[51, 50, 'rg'], [22, 50, 'r'], [80, 50, 'g']], hint: 'Red light plus green light makes yellow. Drag the lamps.' },
+      { lamps: 'rgb', targets: [[50, 47, 'rgb'], [50, 29, 'rg'], [34, 57, 'rb'], [66, 57, 'gb']], hint: 'All three lights together make white.' },
+      { lamps: 'rgb', targets: [[41, 35, 'rg'], [55, 52.5, 'gb'], [52, 86, 'b'], [14, 30, 'r'], [20, 70, ''], [80, 52, '']], hint: 'Some spots must stay dark. Keep every light off them.' }
+    ];
+    const STARTS = { r: [14, 90], g: [86, 90], b: [50, 12] };
+    const stage = $('mix-stage');
+    let index = 0, level, lamps, spots, won, dragging = null;
 
-    const show = () => { $('arc-score').textContent = score; $('arc-arrows').textContent = arrows; };
+    const clamp = v => Math.max(4, Math.min(96, v));
+    const lightAt = (x, y) => [...level.lamps].filter(id => Math.hypot(x - lamps[id].x, y - lamps[id].y) <= RADIUS).join('');
 
-    function tick(now) {
-      const speed = (calm ? 0.001 : 0.0015) + Math.max(score, 0) * 0.0002;
-      phase += Math.min(now - last, 50) * speed; last = now;
-      const reach = Math.min(Math.max($('range').clientWidth / 2 - 100, 70), 150);
-      x = Math.sin(phase) * reach;
-      mover.style.transform = 'translateX(' + x + 'px)';
-      frame = requestAnimationFrame(tick);
+    function update() {
+      let correct = 0;
+      spots.forEach(({ el, x, y, want }) => {
+        const ok = lightAt(x, y) === want;
+        if (ok) correct++;
+        el.classList.toggle('ok', ok);
+        el.querySelector('b').textContent = ok ? '✓' : '';
+      });
+      [...level.lamps].forEach(id => {
+        const lamp = lamps[id];
+        [lamp.glow, lamp.handle].forEach(el => { el.style.left = lamp.x + '%'; el.style.top = lamp.y + '%'; });
+      });
+      $('mix-count').textContent = correct + ' / ' + spots.length;
+      return correct === spots.length;
     }
 
-    function stop() {
-      cancelAnimationFrame(frame); clearTimeout(timer);
-      running = flying = false;
-      arrow.classList.remove('fly'); arrow.style.bottom = '';
-      button.textContent = 'Start'; button.disabled = false;
-    }
-    stopArchery = () => { if (running) { stop(); status.textContent = ''; } };
-
-    function start() {
-      score = 0; arrows = 5; running = true; phase = Math.PI / 2; last = performance.now();
-      button.textContent = 'Shoot'; status.textContent = ''; show();
-      frame = requestAnimationFrame(tick);
+    function finish() {
+      if (won || !update()) return;
+      won = true; dragging = null;
+      $('mix-status').textContent = index === LEVELS.length - 1 ? 'Every level lit! 🎉' : 'Perfect mix! 🎉';
+      $('mix-next').textContent = index === LEVELS.length - 1 ? 'Play from level 1' : 'Next level →';
+      $('mix-next').hidden = false;
+      window.burst(stage); sfx('win');
     }
 
-    function land() {
-      // Melon sits at the centre of the mover; bystanders are 76px to each side
-      const offset = Math.abs(x);
-      if (offset <= 32) {
-        score++; status.textContent = 'Juicy hit! +1'; window.sfx('good');
-        melon.classList.remove('hit'); void melon.offsetWidth; melon.classList.add('hit');
-      } else if (Math.abs(offset - 76) <= 20) {
-        score--; status.textContent = 'Careful! You hit a bystander. −1'; window.sfx('bad');
-      } else status.textContent = 'Missed.';
-      arrows--; show();
-      arrow.classList.remove('fly'); arrow.style.bottom = '';
-      flying = false; button.disabled = false;
-      if (!arrows) {
-        const final = score;
-        stop(); button.textContent = 'Play again';
-        status.textContent = 'Final score: ' + final + ' out of 5' + (final >= 4 ? '. Sharp shooting! 🎯' : '.');
-        window.saveBest('archery', final, false, 'arc-best');
-        if (final >= 4) { window.burst($('range')); window.sfx('win'); }
-      }
+    function moveLamp(id, x, y) {
+      if (won) return;
+      const before = $('mix-count').textContent;
+      lamps[id].x = clamp(x); lamps[id].y = clamp(y);
+      update();
+      if (parseInt($('mix-count').textContent, 10) > parseInt(before, 10)) sfx('tap');
     }
 
-    button.addEventListener('click', () => {
-      if (!running) return start();
-      if (flying) return;
-      flying = true;
-      window.sfx('tap');
-      void arrow.offsetWidth;
-      arrow.classList.add('fly'); arrow.style.bottom = '168px';
-      timer = setTimeout(land, 150);
+    function load() {
+      level = LEVELS[index]; won = false; lamps = {}; stage.textContent = '';
+      [...level.lamps].forEach(id => {
+        const glow = stage.appendChild(document.createElement('span'));
+        glow.className = 'glow ' + id;
+        const handle = stage.appendChild(document.createElement('button'));
+        handle.type = 'button'; handle.className = 'lamp ' + id; handle.dataset.id = id;
+        handle.textContent = id.toUpperCase();
+        handle.setAttribute('aria-label', NAMES[id] + ' lamp. Move with the arrow keys.');
+        lamps[id] = { x: STARTS[id][0], y: STARTS[id][1], glow, handle };
+        handle.addEventListener('pointerdown', e => { e.preventDefault(); handle.focus(); dragging = id; });
+        handle.addEventListener('keydown', e => {
+          const d = { ArrowUp: [0, -2], ArrowDown: [0, 2], ArrowLeft: [-2, 0], ArrowRight: [2, 0] }[e.key];
+          if (!d) return;
+          e.preventDefault();
+          moveLamp(id, lamps[id].x + d[0], lamps[id].y + d[1]);
+          finish();
+        });
+      });
+      spots = level.targets.map(([x, y, want]) => {
+        const el = stage.appendChild(document.createElement('span'));
+        el.className = 'spot' + (want ? '' : ' dark');
+        el.style.left = x + '%'; el.style.top = y + '%';
+        el.style.setProperty('--want', MIXES[want][1]);
+        el.innerHTML = '<b></b><small>' + MIXES[want][0] + '</small>';
+        return { el, x, y, want };
+      });
+      $('mix-level').textContent = (index + 1) + ' of ' + LEVELS.length;
+      $('mix-status').textContent = level.hint;
+      $('mix-next').hidden = true;
+      update();
+    }
+
+    addEventListener('pointermove', e => {
+      if (!dragging) return;
+      const r = stage.getBoundingClientRect();
+      moveLamp(dragging, (e.clientX - r.left) / r.width * 100, (e.clientY - r.top) / r.height * 100);
     });
-
-    // Stop the animation when the demo is scrolled out of view
-    new IntersectionObserver(entries => { if (!entries[0].isIntersecting) stopArchery(); }).observe($('range'));
+    addEventListener('pointerup', () => { if (dragging) { dragging = null; finish(); } });
+    addEventListener('pointercancel', () => { dragging = null; });
+    $('mix-reset').addEventListener('click', load);
+    $('mix-next').addEventListener('click', () => { index = (index + 1) % LEVELS.length; load(); });
+    load();
   })();
 })();
