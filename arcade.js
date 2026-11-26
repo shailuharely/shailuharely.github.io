@@ -6,6 +6,41 @@
   const SHAPES = ['●', '▲', '■', '★'];
   const NAMES = ['coral circle', 'blue triangle', 'lime square', 'purple star'];
 
+  /* Best scores, kept on the visitor's own device */
+  const readBest = key => {
+    try { const v = localStorage.getItem('pf-best-' + key); return v === null ? null : Number(v); } catch { return null; }
+  };
+  const showBest = (key, id) => { const v = readBest(key); $(id).textContent = v === null ? '–' : v; };
+  window.saveBest = (key, value, lowerWins, id) => {
+    const old = readBest(key);
+    if (old !== null && (lowerWins ? value >= old : value <= old)) return;
+    try { localStorage.setItem('pf-best-' + key, value); } catch { /* storage can be blocked */ }
+    $(id).textContent = value;
+  };
+  showBest('connect', 'con-best'); showBest('archery', 'arc-best'); showBest('category', 'cat-best');
+
+  /* Sound: synthesised, and off until the visitor turns it on */
+  let audio = null, soundOn = false;
+  const TUNES = { tap: [440], good: [523, 784], bad: [196, 147], win: [523, 659, 784, 1047] };
+  window.sfx = name => {
+    if (!soundOn || !audio) return;
+    TUNES[name].forEach((pitch, i) => {
+      const osc = audio.createOscillator(), gain = audio.createGain(), at = audio.currentTime + i * 0.09;
+      osc.type = 'triangle'; osc.frequency.value = pitch;
+      gain.gain.setValueAtTime(0.12, at); gain.gain.exponentialRampToValueAtTime(0.001, at + 0.12);
+      osc.connect(gain).connect(audio.destination); osc.start(at); osc.stop(at + 0.13);
+    });
+  };
+  $('sound').addEventListener('click', () => {
+    soundOn = !soundOn;
+    const Context = window.AudioContext || window.webkitAudioContext;
+    if (soundOn && !audio && Context) audio = new Context();
+    if (soundOn && audio) audio.resume();
+    $('sound').textContent = soundOn ? '🔊 Sound on' : '🔇 Sound off';
+    $('sound').setAttribute('aria-pressed', soundOn);
+    window.sfx('good');
+  });
+
   /* Tabs */
   const tabs = [...document.querySelectorAll('[role=tab]')];
   let stopArchery = () => {};
@@ -33,7 +68,7 @@
   /* Colour Sort */
   (() => {
     const SIZE = 4;
-    let tubes, picked, moves, won;
+    let tubes, picked, moves, won, history, buttons, level = 1;
     const solved = state => state.every(t => !t.length || (t.length === SIZE && t.every(b => b === t[0])));
     const canMove = (state, a, b) => a !== b && state[a].length > 0 && state[b].length < SIZE &&
       (!state[b].length || state[b][state[b].length - 1] === state[a][state[a].length - 1]);
@@ -42,7 +77,7 @@
     function solvable(start) {
       const seen = new Set();
       const stack = [start];
-      while (stack.length) {
+      while (stack.length && seen.size < 150000) {
         const state = stack.pop();
         if (solved(state)) return true;
         for (let a = 0; a < state.length; a++) for (let b = 0; b < state.length; b++) {
@@ -59,20 +94,25 @@
     function deal() {
       let state;
       do {
-        const balls = [0, 1, 2].flatMap(c => Array(SIZE).fill(c));
+        // Level 1 has three colours; later levels have four
+        const colours = level === 1 ? 3 : 4;
+        const balls = Array.from({ length: colours }, (_, c) => Array(SIZE).fill(c)).flat();
         for (let i = balls.length - 1; i > 0; i--) { const j = random(i + 1); [balls[i], balls[j]] = [balls[j], balls[i]]; }
-        state = [balls.slice(0, 4), balls.slice(4, 8), balls.slice(8), [], []];
+        state = Array.from({ length: colours }, (_, i) => balls.slice(i * SIZE, (i + 1) * SIZE)).concat([[], []]);
       } while (solved(state) || !solvable(state));
       return state;
     }
 
-    const buttons = Array.from({ length: 5 }, (_, i) => {
-      const button = document.createElement('button');
-      button.type = 'button'; button.className = 'tube';
-      button.addEventListener('click', () => tap(i));
-      $('tubes').appendChild(button);
-      return button;
-    });
+    function build(count) {
+      $('tubes').textContent = '';
+      buttons = Array.from({ length: count }, (_, i) => {
+        const button = document.createElement('button');
+        button.type = 'button'; button.className = 'tube';
+        button.addEventListener('click', () => tap(i));
+        $('tubes').appendChild(button);
+        return button;
+      });
+    }
 
     function draw(dropped) {
       buttons.forEach((button, i) => {
@@ -89,6 +129,8 @@
           (tubes[i].length ? tubes[i].map(c => NAMES[c]).reverse().join(', ') + ' (top first)' : 'empty'));
       });
       $('sort-moves').textContent = moves;
+      $('sort-level').textContent = level;
+      $('sort-undo').disabled = won || !history.length;
     }
 
     function tap(i) {
@@ -101,16 +143,40 @@
         picked = null; draw();
         buttons[i].classList.remove('shake'); void buttons[i].offsetWidth; buttons[i].classList.add('shake');
         status.textContent = 'That ball can only go on the same colour or into an empty tube.';
+        window.sfx('bad');
         return;
       }
+      history.push([picked, i]);
       tubes[i].push(tubes[picked].pop());
-      picked = null; moves++; draw(i);
-      if (solved(tubes)) { won = true; status.textContent = 'Sorted in ' + moves + ' moves! 🎉'; window.burst($('tubes')); }
-      else if (!tubes.some((_, a) => tubes.some((_, b) => canMove(tubes, a, b)))) status.textContent = 'No moves left. Try a new puzzle.';
+      picked = null; moves++;
+      won = solved(tubes);
+      draw(i);
+      if (won) {
+        status.textContent = 'Level ' + level + ' sorted in ' + moves + ' moves! 🎉';
+        window.saveBest('sort-' + Math.min(level, 2), moves, true, 'sort-best');
+        $('sort-next').hidden = false;
+        window.burst($('tubes')); window.sfx('win');
+      } else {
+        window.sfx('tap');
+        if (!tubes.some((_, a) => tubes.some((_, b) => canMove(tubes, a, b)))) status.textContent = 'No moves left. Undo or try a new puzzle.';
+      }
     }
 
-    function reset() { tubes = deal(); picked = null; moves = 0; won = false; $('sort-status').textContent = ''; draw(); }
+    $('sort-undo').addEventListener('click', () => {
+      if (won || !history.length) return;
+      const [from, to] = history.pop();
+      tubes[from].push(tubes[to].pop());
+      picked = null; moves++; $('sort-status').textContent = 'Move undone.'; draw(from);
+    });
+
+    function reset() {
+      tubes = deal(); picked = null; moves = 0; won = false; history = [];
+      build(tubes.length);
+      $('sort-status').textContent = ''; $('sort-next').hidden = true;
+      showBest('sort-' + Math.min(level, 2), 'sort-best'); draw();
+    }
     $('sort-reset').addEventListener('click', reset);
+    $('sort-next').addEventListener('click', () => { level++; reset(); buttons[0].focus(); });
     reset();
   })();
 
@@ -168,13 +234,15 @@
       if (chain.length && fits(i)) chain.push(i);
       else chain = chain.length === 1 && chain[0] === i ? [] : [i];
       $('con-status').textContent = chain.length >= 3 ? chain.length + ' linked. Pop it!' : '';
+      window.sfx('tap');
       draw();
     }
 
     function pop() {
       if (over()) return;
       if (chain.length < 3) { $('con-status').textContent = 'Link at least 3 balls.'; return; }
-      moves--; fuel += chain.length;
+      const bonus = chain.length >= 5 ? 2 : 0;
+      moves--; fuel += chain.length + bonus;
       const gone = new Set(chain), fresh = [];
       for (let x = 0; x < W; x++) {
         const keep = [];
@@ -187,9 +255,18 @@
       while (!hasMove()) grid = grid.map(() => random(4));
       const size = chain.length;
       chain = []; draw(fresh);
-      if (fuel >= GOAL) { $('con-status').textContent = 'Finish line reached! 🏁'; window.burst(board); }
-      else if (!moves) $('con-status').textContent = 'Out of moves at ' + Math.round(fuel / GOAL * 100) + '%. Try again.';
-      else $('con-status').textContent = '+' + size + ' fuel';
+      if (fuel >= GOAL) {
+        const used = MOVES - moves;
+        $('con-status').textContent = 'Finish line in ' + used + ' moves! ' + '⭐'.repeat(used <= 3 ? 3 : used <= 5 ? 2 : 1);
+        window.saveBest('connect', used, true, 'con-best');
+        window.burst(board); window.sfx('win');
+      } else if (!moves) {
+        $('con-status').textContent = 'Out of moves at ' + Math.round(fuel / GOAL * 100) + '%. Try again.';
+        window.sfx('bad');
+      } else {
+        $('con-status').textContent = bonus ? 'Combo! +' + (size + bonus) + ' fuel' : '+' + size + ' fuel';
+        window.sfx('good');
+      }
     }
 
     board.addEventListener('pointerdown', e => {
@@ -261,10 +338,10 @@
       // Melon sits at the centre of the mover; bystanders are 76px to each side
       const offset = Math.abs(x);
       if (offset <= 32) {
-        score++; status.textContent = 'Juicy hit! +1';
+        score++; status.textContent = 'Juicy hit! +1'; window.sfx('good');
         melon.classList.remove('hit'); void melon.offsetWidth; melon.classList.add('hit');
       } else if (Math.abs(offset - 76) <= 20) {
-        score--; status.textContent = 'Careful! You hit a bystander. −1';
+        score--; status.textContent = 'Careful! You hit a bystander. −1'; window.sfx('bad');
       } else status.textContent = 'Missed.';
       arrows--; show();
       arrow.classList.remove('fly'); arrow.style.bottom = '';
@@ -273,7 +350,8 @@
         const final = score;
         stop(); button.textContent = 'Play again';
         status.textContent = 'Final score: ' + final + ' out of 5' + (final >= 4 ? '. Sharp shooting! 🎯' : '.');
-        if (final >= 4) window.burst($('range'));
+        window.saveBest('archery', final, false, 'arc-best');
+        if (final >= 4) { window.burst($('range')); window.sfx('win'); }
       }
     }
 
@@ -281,6 +359,7 @@
       if (!running) return start();
       if (flying) return;
       flying = true;
+      window.sfx('tap');
       void arrow.offsetWidth;
       arrow.classList.add('fly'); arrow.style.bottom = '168px';
       timer = setTimeout(land, 150);

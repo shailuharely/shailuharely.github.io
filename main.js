@@ -105,6 +105,61 @@ if (stage && !calmMotion) {
   }, { passive: true });
 }
 
+// Game icons: a different hover effect every time, and rotating icons around the portrait
+const EFFECTS = ['spin', 'jelly', 'hop', 'flip', 'wiggle', 'zoomy'];
+function playEffect(link) {
+  const img = link.querySelector('img');
+  const choices = EFFECTS.filter(name => name !== link.dataset.fx);
+  const next = choices[Math.floor(Math.random() * choices.length)];
+  img.classList.remove(...EFFECTS.map(name => 'fx-' + name), 'swap');
+  void img.offsetWidth;
+  link.dataset.fx = next;
+  img.classList.add('fx-' + next);
+}
+document.querySelectorAll('.icon-link, .float').forEach(link => {
+  link.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') playEffect(link); });
+  link.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') playEffect(link); });
+  link.addEventListener('focus', () => playEffect(link));
+});
+
+const slots = [...document.querySelectorAll('.float')];
+if (slots.length) {
+  // The game library is the single list of games
+  const games = [...document.querySelectorAll('.icon-link')].map(a => ({
+    url: a.href,
+    src: a.querySelector('img').getAttribute('src'),
+    name: a.closest('li').querySelector('h3').textContent
+  }));
+  let turn = 0, holdUntil = 0;
+  const busy = slot => slot.matches(':hover') || slot === document.activeElement;
+  const swapIcon = slot => {
+    const shown = slots.map(s => s.href);
+    const spare = games.filter(g => !shown.includes(g.url));
+    if (!spare.length) return;
+    const game = spare[Math.floor(Math.random() * spare.length)];
+    const img = slot.querySelector('img');
+    slot.href = game.url;
+    slot.setAttribute('aria-label', 'Open ' + game.name + ' on Google Play');
+    slot.querySelector('.tip').textContent = game.name + ' ↗';
+    img.src = game.src;
+    img.className = '';
+    void img.offsetWidth;
+    img.className = 'swap';
+  };
+  slots.forEach(slot => {
+    // After the mouse leaves, show a different game for next time
+    slot.addEventListener('pointerleave', e => {
+      if (e.pointerType === 'mouse' && !calmMotion) setTimeout(() => { if (!busy(slot)) swapIcon(slot); }, 350);
+    });
+    // Never change an icon while someone is tapping it
+    slot.addEventListener('pointerdown', () => { holdUntil = Date.now() + 5000; });
+  });
+  if (!calmMotion) setInterval(() => {
+    if (document.hidden || Date.now() < holdUntil || slots.some(busy)) return;
+    swapIcon(slots[turn++ % slots.length]);
+  }, 3200);
+}
+
 // Mini sorting puzzle. Edit GROUPS to change the level.
 const board = document.getElementById('board');
 if (board) {
@@ -143,11 +198,16 @@ if (board) {
       counts[group]++;
       bin.querySelector('small').textContent = counts[group] + ' / ' + GROUPS[group].length;
       bin.classList.toggle('done', counts[group] === GROUPS[group].length);
-      if (!board.children.length) window.burst(bins);
+      if (!board.children.length) {
+        window.burst(bins);
+        window.sfx('win');
+        window.saveBest('category', mistakes, true, 'cat-best');
+      } else window.sfx('good');
       status.textContent = board.children.length ? 'Nice!' :
         'Level cleared in ' + moves + ' moves with ' + mistakes + ' mistake' + (mistakes === 1 ? '' : 's') + '. 🎉';
     } else {
       mistakes++;
+      window.sfx('bad');
       bin.classList.remove('wrong'); void bin.offsetWidth; bin.classList.add('wrong');
       status.textContent = 'Not that group. Try again.';
     }

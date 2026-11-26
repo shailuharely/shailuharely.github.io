@@ -48,7 +48,8 @@ h3{font-size:1.2rem;margin-bottom:.5rem}
 .stage{position:relative;height:540px;--mx:0;--my:0}
 .blob{position:absolute;inset:8% 4% 0;border-radius:48% 48% 28px 28px;background:linear-gradient(160deg,#8b76ff,var(--primary) 55%,var(--depth));box-shadow:0 14px 0 var(--ink)}
 .hero-portrait{position:absolute;bottom:0;left:50%;height:100%;width:auto;max-width:none;transform:translateX(-50%);-webkit-mask-image:linear-gradient(#000 88%,transparent);mask-image:linear-gradient(#000 88%,transparent)}
-.float{position:absolute;width:84px;height:84px;border-radius:22px;border:4px solid #fff;box-shadow:0 10px 24px rgba(23,24,34,.25);translate:calc(var(--mx)*14px) calc(var(--my)*14px);animation:bob 5s ease-in-out infinite}
+.float img{width:100%;height:100%;border-radius:22px;border:4px solid #fff;box-shadow:0 10px 24px rgba(23,24,34,.25)}
+.float{position:absolute;z-index:2;width:84px;height:84px;translate:calc(var(--mx)*14px) calc(var(--my)*14px);animation:bob 5s ease-in-out infinite}
 .f1{left:-2%;top:18%;rotate:-9deg}
 .f2{right:-1%;top:8%;rotate:8deg;animation-delay:-1.3s}
 .f3{left:2%;bottom:14%;rotate:7deg;animation-delay:-2.4s}
@@ -107,7 +108,6 @@ h3{font-size:1.2rem;margin-bottom:.5rem}
 .games .card:nth-child(4n+2){--glow:var(--coral)}.games .card:nth-child(4n+3){--glow:var(--sky)}.games .card:nth-child(4n){--glow:var(--gold)}
 .games .card.in:hover,html:not(.js) .games .card:hover{transform:translateY(-6px);border-color:var(--glow);box-shadow:0 10px 0 var(--glow)}
 .games img{width:112px;height:112px;border-radius:26px;margin-bottom:1rem;box-shadow:0 8px 18px rgba(23,24,34,.18);transition:transform .22s var(--ease)}
-.games .card:hover img{transform:rotate(-4deg) scale(1.07)}
 .games h3{margin:.6rem 0 .3rem}
 .games p{font-size:.9rem;line-height:1.55;flex:1}
 .links{display:flex;flex-wrap:wrap;gap:.25rem 1rem;margin-top:.75rem}
@@ -134,7 +134,7 @@ h3{font-size:1.2rem;margin-bottom:.5rem}
 .c0{--ball:#FF8A65}.c1{--ball:#75C7FF}.c2{--ball:#D5F45B}.c3{--ball:#b9a8ff}
 .ball{display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 32% 28%,#fff 0 6%,var(--ball) 40%);box-shadow:inset 0 -5px 8px rgba(0,0,0,.2);font-size:1rem;color:var(--ink)}
 .tubes{display:flex;justify-content:center;gap:clamp(.35rem,2vw,1.1rem)}
-.tube{display:flex;flex-direction:column-reverse;align-items:center;gap:4px;width:62px;height:240px;padding:7px 0 9px;background:var(--canvas);border:3px solid var(--ink);border-top-width:0;border-radius:0 0 32px 32px;cursor:pointer;transition:transform .18s var(--ease),background .18s}
+.tube{flex:0 1 62px;min-width:0;display:flex;flex-direction:column-reverse;align-items:center;gap:4px;width:62px;height:240px;padding:7px 0 9px;background:var(--canvas);border:3px solid var(--ink);border-top-width:0;border-radius:0 0 32px 32px;cursor:pointer;transition:transform .18s var(--ease),background .18s}
 .tube .ball{width:46px;height:46px;flex:none}
 .tube[aria-pressed=true]{transform:translateY(-10px);background:var(--lime)}
 .tube.done{background:var(--lav)}
@@ -245,7 +245,8 @@ dialog img{width:100%}
   .hero .actions{justify-content:center}
   .lead{margin-inline:auto}
   .stage{height:420px;max-width:420px;width:100%;margin-inline:auto}
-  .float{width:62px;height:62px;border-radius:16px}
+  .float{width:62px;height:62px}
+  .float img{border-radius:16px}
   .games{grid-template-columns:repeat(2,1fr)}
   .feature,.contact{padding:1.4rem}
   .section{padding-top:4.5rem}
@@ -261,8 +262,8 @@ dialog img{width:100%}
   .console{padding:1rem}
   .tabs{display:grid;grid-template-columns:1fr 1fr}
   .board{grid-template-columns:repeat(3,1fr)}
-  .tube{width:50px;height:210px}
-  .tube .ball{width:38px;height:38px}
+  .tube{height:210px}
+  .tube .ball{width:min(38px,90%);height:auto;aspect-ratio:1}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -280,3 +281,31 @@ dialog img{width:100%}
 .grad button:hover img{transform:scale(1.04)}
 .grad figcaption{margin-top:.6rem;font-weight:700;font-size:.9rem;text-align:center}
 @media (max-width:700px){.grad-grid{grid-template-columns:1fr}}
+
+/* Tappable game icons */
+.icon-link{position:relative;align-self:flex-start;margin-bottom:1rem;border-radius:26px}
+.games .icon-link img{margin:0}
+.icon-link::after{content:"↗";position:absolute;right:-8px;bottom:-8px;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--lime);font-weight:800;font-size:.85rem;border:2px solid #fff}
+.tip{position:absolute;left:50%;top:calc(100% + 6px);translate:-50% 0;white-space:nowrap;background:var(--ink);color:#fff;border-radius:8px;padding:.2rem .6rem;font-size:.75rem;font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s}
+.float:hover,.float:focus-visible{z-index:3}
+.float:hover .tip,.float:focus-visible .tip{opacity:1}
+.float img.swap{animation:swapin .5s var(--ease)}
+.icon-link img.fx-spin,.float img.fx-spin{animation:fx-spin .7s var(--ease)}
+.icon-link img.fx-jelly,.float img.fx-jelly{animation:fx-jelly .7s ease}
+.icon-link img.fx-hop,.float img.fx-hop{animation:fx-hop .65s ease}
+.icon-link img.fx-flip,.float img.fx-flip{animation:fx-flip .7s var(--ease)}
+.icon-link img.fx-wiggle,.float img.fx-wiggle{animation:fx-wiggle .6s ease}
+.icon-link img.fx-zoomy,.float img.fx-zoomy{animation:fx-zoomy .6s var(--ease)}
+@keyframes swapin{from{transform:scale(.3) rotate(-90deg);opacity:0}}
+@keyframes fx-spin{to{transform:rotate(360deg)}}
+@keyframes fx-jelly{25%{transform:scale(1.25,.8)}50%{transform:scale(.85,1.18)}75%{transform:scale(1.08,.94)}}
+@keyframes fx-hop{35%{transform:translateY(-22px) scale(1.06)}60%{transform:translateY(0) scale(1.1,.9)}80%{transform:translateY(-8px)}}
+@keyframes fx-flip{from{transform:perspective(400px) rotateY(0)}to{transform:perspective(400px) rotateY(360deg)}}
+@keyframes fx-wiggle{20%{transform:rotate(-14deg)}40%{transform:rotate(12deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(5deg)}}
+@keyframes fx-zoomy{40%{transform:scale(1.3) rotate(-6deg)}70%{transform:scale(.94) rotate(3deg)}}
+.sound-row{display:flex;justify-content:center;margin-bottom:1rem}
+.btn:disabled{opacity:.45;cursor:default}
+@media (prefers-reduced-motion:reduce){.icon-link img,.float img{animation:none!important}}
+/* Keep icon name labels inside the screen */
+.f1 .tip,.f3 .tip{left:0;translate:0}
+.f2 .tip,.f4 .tip{left:auto;right:0;translate:0}
