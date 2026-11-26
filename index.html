@@ -8,47 +8,58 @@
   <meta property="og:title" content="C Hemasailesh — Game Designer">
   <meta property="og:description" content="Level &amp; feature designer for mobile games. 4+ years. Category Sort: 1M+ downloads.">
   <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%238cff3d' d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%236952F5' d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z'/></svg>">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="main.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=3">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="main.js?v=3" defer></script>
+  <script src="arcade.js?v=3" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
 <header class="nav">
   <a class="brand" href="#top"><span class="spark">✦</span> C Hemasailesh</a>
   <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
   <nav id="menu">
     <a href="#work">Work</a>
+    <a href="#games">Games</a>
     <a href="#play">Play</a>
-    <a href="#about">About</a>
+    <a href="#about">Skills</a>
+    <a href="#journey">Journey</a>
     <a class="pill" href="#contact">Contact</a>
   </nav>
 </header>
 
 <main id="main">
   <section class="hero wrap" id="top">
-    <div>
+    <div class="hero-copy">
       <p class="eyebrow">Namaste, my name is</p>
-      <h1>C Hemasailesh</h1>
+      <h1>C Hema&shy;sailesh</h1>
       <p class="role">Game Designer <span>/</span> Level &amp; Feature Design</p>
       <p class="lead">I've spent the last 4+ years designing mobile games, including Category Sort, a hybrid casual puzzle game with 1M+ downloads.</p>
       <div class="actions">
         <a class="btn" href="#work">View my work</a>
-        <a class="btn ghost" href="#contact">Let's collaborate</a>
+        <a class="btn alt" href="#play">▶ Play a demo</a>
       </div>
     </div>
-    <div class="portrait">
-      <img src="assets/portrait.png" alt="Portrait of C Hemasailesh" width="1024" height="1536">
+    <div class="stage" id="stage">
+      <div class="blob"></div>
+      <img class="hero-portrait" src="assets/portrait.png" alt="Portrait of C Hemasailesh" width="1024" height="1536">
+      <img class="float f1" src="assets/games/sand-mania.png" alt="" width="96" height="96">
+      <img class="float f2" src="assets/games/archery-shooter.webp" alt="" width="96" height="96">
+      <img class="float f3" src="assets/games/connect-racing.png" alt="" width="96" height="96">
+      <img class="float f4" src="assets/games/hole-drop.png" alt="" width="96" height="96">
+      <span class="shape s1"></span><span class="shape s2"></span><span class="shape s3"></span>
     </div>
   </section>
 
   <section class="wrap stats" aria-label="Career highlights">
-    <div><strong>4+</strong><span>Years of experience</span></div>
-    <div><strong>50+</strong><span>Projects completed</span></div>
-    <div><strong>2+</strong><span>Concept to success</span></div>
-    <div><strong>1M+</strong><span>Category Sort downloads</span></div>
+    <div><strong data-count>4+</strong><span>Years of experience</span></div>
+    <div><strong data-count>50+</strong><span>Projects completed</span></div>
+    <div><strong data-count>2+</strong><span>Concept to success</span></div>
+    <div><strong data-count>1M+</strong><span>Category Sort downloads</span></div>
   </section>
 
   <section class="wrap logos" aria-label="Studios I have worked with">
@@ -59,10 +70,9 @@
   </section>
 
   <section class="wrap section" id="work">
-    <p class="eyebrow">Featured project</p>
-    <h2>My Work</h2>
-    <a class="card feature" href="category-sort.html">
-      <img src="assets/category-sort-cover.webp" alt="Category Sort icon above a chart showing daily revenue rising to about 5 thousand dollars" width="665" height="569">
+    <p class="eyebrow">Featured case study</p>
+    <h2>The big win</h2>
+    <a class="feature" href="category-sort.html">
       <div>
         <span class="tag">Level &amp; Feature Design</span>
         <h3>Category Sort — Amgo Games</h3>
@@ -72,148 +82,171 @@
           <li>700+ levels</li>
           <li>$4K–$5K avg. daily revenue</li>
         </ul>
-        <span class="more">Read the case study →</span>
+        <span class="btn lime">Read the case study →</span>
       </div>
+      <img src="assets/category-sort-cover.webp" alt="Category Sort icon above a chart showing daily revenue rising to about 5 thousand dollars" width="665" height="569">
     </a>
-
-    <div class="prototypes">
-      <h3>More games at Mee Mee Games</h3>
-      <p class="sub">My role on these games: Game Designer.</p>
-      <div class="card role-box">
-        <ul>
-          <li><b>Prototype:</b> worked on the first prototype within 20 days</li>
-          <li><b>Design:</b> level design, FTUE design and game balancing</li>
-          <li><b>Documentation:</b> provided the game design document (GDD)</li>
-          <li><b>Delivery:</b> managed the game and delivered it to the head of studios</li>
-        </ul>
-      </div>
-      <ul class="games">
-        <li class="card">
-          <img src="assets/games/sand-mania.png" alt="Sand Mania icon" width="512" height="512" loading="lazy">
-          <div>
-            <span class="tag">Sorting puzzle</span>
-            <h4>Sand Mania</h4>
-            <p>Tap 3D sand objects and turn them into flowing sand that fills buckets on a conveyor.</p>
-            <a href="https://play.google.com/store/apps/details?id=com.meemeegames.sandmania" target="_blank" rel="noopener" aria-label="Sand Mania on Google Play">Google Play ↗</a>
-          </div>
-        </li>
-        <li class="card">
-          <img src="assets/games/archery-shooter.webp" alt="Archery Shooter icon" width="512" height="512" loading="lazy">
-          <div>
-            <span class="tag">Archery</span>
-            <h4>Archery Shooter</h4>
-            <p>Aim and shoot fruit and targets while avoiding the people nearby.</p>
-            <a href="https://play.google.com/store/apps/details?id=com.meemeegames.archeryshooter" target="_blank" rel="noopener" aria-label="Archery Shooter on Google Play">Google Play ↗</a>
-          </div>
-        </li>
-        <li class="card">
-          <img src="assets/games/connect-racing.png" alt="Connect Racing icon" width="512" height="512" loading="lazy">
-          <div>
-            <span class="tag">Puzzle racing</span>
-            <h4>Connect Racing</h4>
-            <p>Link same-colour balls to complete objectives and collect fuel for your bike.</p>
-            <a href="https://play.google.com/store/apps/details?id=com.meemeegames.connectracing" target="_blank" rel="noopener" aria-label="Connect Racing on Google Play">Google Play ↗</a>
-          </div>
-        </li>
-        <li class="card">
-          <img src="assets/games/emoji-joy.webp" alt="Emoji Joy icon" width="512" height="512" loading="lazy">
-          <div>
-            <span class="tag">Match-3</span>
-            <h4>Emoji Joy</h4>
-            <p>Swap and match emojis of the same colour to clear level objectives.</p>
-            <a href="https://play.google.com/store/apps/details?id=com.meemeegames.emojijoy" target="_blank" rel="noopener" aria-label="Emoji Joy on Google Play">Google Play ↗</a>
-          </div>
-        </li>
-        <li class="card">
-          <img src="assets/games/color-connect-number.png" alt="Color Connect Number icon" width="512" height="512" loading="lazy">
-          <div>
-            <span class="tag">Number puzzle</span>
-            <h4>Color Connect Number</h4>
-            <p>Find and connect matching numbers to clear the board.</p>
-            <a href="https://play.google.com/store/apps/details?id=com.meemeegames.colorconnectnumber" target="_blank" rel="noopener" aria-label="Color Connect Number on Google Play">Google Play ↗</a>
-          </div>
-        </li>
-        <li class="card">
-          <img src="assets/games/perfect-packing.png" alt="Perfect Packing icon" width="512" height="512" loading="lazy">
-          <div>
-            <span class="tag">Hidden object</span>
-            <h4>Perfect Packing</h4>
-            <p>Find hidden items and fit them neatly into a box.</p>
-            <a href="https://play.google.com/store/apps/details?id=com.meemeegames.findfrenzy" target="_blank" rel="noopener" aria-label="Perfect Packing on Google Play">Google Play ↗</a>
-          </div>
-        </li>
-        <li class="card">
-          <img src="assets/games/hole-drop.png" alt="Hole Drop icon" width="512" height="512" loading="lazy">
-          <div>
-            <span class="tag">Ball sorting</span>
-            <h4>Hole Drop</h4>
-            <p>Send same-colour balls into matching holes before the slots overflow.</p>
-            <a href="https://play.google.com/store/apps/details?id=com.meemeegames.holedrop" target="_blank" rel="noopener" aria-label="Hole Drop on Google Play">Google Play ↗</a>
-          </div>
-        </li>
-      </ul>
-    </div>
   </section>
 
-  <section class="wrap section" id="play">
-    <p class="eyebrow">Interactive</p>
-    <h2>Take a sorting break</h2>
-    <p class="sub">A tiny category puzzle. Pick a card, then pick the group it belongs to.</p>
-    <div class="card game">
-      <div class="hud">
-        <span>Moves: <b id="moves">0</b></span>
-        <span>Mistakes: <b id="mistakes">0</b></span>
-        <button type="button" id="restart" class="btn ghost small">Restart</button>
+  <section class="wrap section" id="games">
+    <p class="eyebrow">Game library</p>
+    <h2>More games at Mee Mee Games</h2>
+    <p class="sub">My role on these games: Game Designer.</p>
+    <ul class="role-box">
+      <li><b>Prototype</b>Worked on the first prototype within 20 days</li>
+      <li><b>Design</b>Level design, FTUE design and game balancing</li>
+      <li><b>Documentation</b>Provided the game design document (GDD)</li>
+      <li><b>Delivery</b>Managed the game and delivered it to the head of studios</li>
+    </ul>
+    <ul class="games">
+      <li class="card">
+        <img src="assets/games/sand-mania.png" alt="Sand Mania icon" width="512" height="512" loading="lazy">
+        <span class="tag">Sorting puzzle</span>
+        <h3>Sand Mania</h3>
+        <p>Tap 3D sand objects and turn them into flowing sand that fills buckets on a conveyor.</p>
+        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.sandmania" target="_blank" rel="noopener" aria-label="Sand Mania on Google Play">Google Play ↗</a><a href="#play" data-demo="sort">▶ Sorting demo</a></div>
+      </li>
+      <li class="card">
+        <img src="assets/games/archery-shooter.webp" alt="Archery Shooter icon" width="512" height="512" loading="lazy">
+        <span class="tag">Archery</span>
+        <h3>Archery Shooter</h3>
+        <p>Aim and shoot fruit and targets while avoiding the people nearby.</p>
+        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.archeryshooter" target="_blank" rel="noopener" aria-label="Archery Shooter on Google Play">Google Play ↗</a><a href="#play" data-demo="archery">▶ Aiming demo</a></div>
+      </li>
+      <li class="card">
+        <img src="assets/games/connect-racing.png" alt="Connect Racing icon" width="512" height="512" loading="lazy">
+        <span class="tag">Puzzle racing</span>
+        <h3>Connect Racing</h3>
+        <p>Link same-colour balls to complete objectives and collect fuel for your bike.</p>
+        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.connectracing" target="_blank" rel="noopener" aria-label="Connect Racing on Google Play">Google Play ↗</a><a href="#play" data-demo="connect">▶ Linking demo</a></div>
+      </li>
+      <li class="card">
+        <img src="assets/games/emoji-joy.webp" alt="Emoji Joy icon" width="512" height="512" loading="lazy">
+        <span class="tag">Match-3</span>
+        <h3>Emoji Joy</h3>
+        <p>Swap and match emojis of the same colour to clear level objectives.</p>
+        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.emojijoy" target="_blank" rel="noopener" aria-label="Emoji Joy on Google Play">Google Play ↗</a></div>
+      </li>
+      <li class="card">
+        <img src="assets/games/color-connect-number.png" alt="Color Connect Number icon" width="512" height="512" loading="lazy">
+        <span class="tag">Number puzzle</span>
+        <h3>Color Connect Number</h3>
+        <p>Find and connect matching numbers to clear the board.</p>
+        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.colorconnectnumber" target="_blank" rel="noopener" aria-label="Color Connect Number on Google Play">Google Play ↗</a></div>
+      </li>
+      <li class="card">
+        <img src="assets/games/perfect-packing.png" alt="Perfect Packing icon" width="512" height="512" loading="lazy">
+        <span class="tag">Hidden object</span>
+        <h3>Perfect Packing</h3>
+        <p>Find hidden items and fit them neatly into a box.</p>
+        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.findfrenzy" target="_blank" rel="noopener" aria-label="Perfect Packing on Google Play">Google Play ↗</a></div>
+      </li>
+      <li class="card">
+        <img src="assets/games/hole-drop.png" alt="Hole Drop icon" width="512" height="512" loading="lazy">
+        <span class="tag">Ball sorting</span>
+        <h3>Hole Drop</h3>
+        <p>Send same-colour balls into matching holes before the slots overflow.</p>
+        <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.holedrop" target="_blank" rel="noopener" aria-label="Hole Drop on Google Play">Google Play ↗</a></div>
+      </li>
+      <li class="card next-card">
+        <span class="big" aria-hidden="true">▶</span>
+        <h3>Your turn to play</h3>
+        <p>Four quick browser demos.</p>
+        <a class="btn lime" href="#play">Open the arcade</a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section arcade-zone" id="play">
+    <div class="wrap">
+      <p class="eyebrow">Playground</p>
+      <h2>Play the mechanics</h2>
+      <p class="sub">Small web demos inspired by these genres. They are not the shipped games or their real levels.</p>
+      <div class="tabs" role="tablist" aria-label="Mini-games">
+        <button role="tab" id="tab-sort" aria-controls="panel-sort" aria-selected="true">Colour Sort</button>
+        <button role="tab" id="tab-connect" aria-controls="panel-connect" aria-selected="false" tabindex="-1">Connect Fuel</button>
+        <button role="tab" id="tab-archery" aria-controls="panel-archery" aria-selected="false" tabindex="-1">Melon Shot</button>
+        <button role="tab" id="tab-category" aria-controls="panel-category" aria-selected="false" tabindex="-1">Category Match</button>
       </div>
-      <div class="board" id="board" aria-label="Cards to sort"></div>
-      <div class="bins" id="bins"></div>
-      <p id="status" role="status"></p>
+
+      <div class="console">
+        <div role="tabpanel" id="panel-sort" aria-labelledby="tab-sort">
+          <p class="how">Tap a tube, then tap another to move the top ball. Give each colour its own tube.</p>
+          <div class="hud"><span>Moves: <b id="sort-moves">0</b></span><button type="button" class="btn small ghost" id="sort-reset">New puzzle</button></div>
+          <div class="tubes" id="tubes"></div>
+          <p class="status" id="sort-status" role="status"></p>
+        </div>
+
+        <div role="tabpanel" id="panel-connect" aria-labelledby="tab-connect" hidden>
+          <p class="how">Drag or tap across 3 or more touching balls of one colour. Fill the tank in 10 moves.</p>
+          <div class="hud"><span>Moves left: <b id="con-moves">10</b></span><button type="button" class="btn small" id="con-pop">Pop chain</button><button type="button" class="btn small ghost" id="con-reset">Restart</button></div>
+          <div class="road"><span id="bike" aria-hidden="true">🏍️</span><span class="flag" aria-hidden="true">🏁</span><i id="fuel"></i></div>
+          <div class="balls" id="balls"></div>
+          <p class="status" id="con-status" role="status"></p>
+        </div>
+
+        <div role="tabpanel" id="panel-archery" aria-labelledby="tab-archery" hidden>
+          <p class="how">Shoot just before the melon reaches the dashed line, because the arrow takes a moment to arrive. Don't hit the bystanders.</p>
+          <div class="hud"><span>Score: <b id="arc-score">0</b></span><span>Arrows: <b id="arc-arrows">5</b></span></div>
+          <div class="range" id="range">
+            <div class="mover" id="mover"><span class="person" aria-hidden="true">🧍</span><span class="melon" aria-hidden="true">🍉</span><span class="person" aria-hidden="true">🧍</span></div>
+            <span class="arrow" id="arrow" aria-hidden="true"></span>
+            <span class="bow" aria-hidden="true">🏹</span>
+          </div>
+          <button type="button" class="btn lime wide" id="arc-shoot">Start</button>
+          <p class="status" id="arc-status" role="status"></p>
+        </div>
+
+        <div role="tabpanel" id="panel-category" aria-labelledby="tab-category" hidden>
+          <p class="how">Pick a card, then pick the group it belongs to.</p>
+          <div class="hud"><span>Moves: <b id="moves">0</b></span><span>Mistakes: <b id="mistakes">0</b></span><button type="button" id="restart" class="btn small ghost">Restart</button></div>
+          <div class="board" id="board" aria-label="Cards to sort"></div>
+          <div class="bins" id="bins"></div>
+          <p class="status" id="status" role="status"></p>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="wrap section" id="about">
-    <p class="eyebrow">About</p>
+    <p class="eyebrow">Designer toolkit</p>
     <h2>What I bring</h2>
-    <div class="grid three">
-      <article class="card"><h3>Game Design Documentation</h3><p>Feature documents covering player experience, rules, balancing, FTUE, edge cases and implementation needs.</p></article>
-      <article class="card"><h3>Level &amp; Feature Design</h3><p>New mechanics, progression and difficulty balancing across hundreds of levels.</p></article>
-      <article class="card"><h3>Game Ideation &amp; Pitching</h3><p>Shaping game ideas and pitching them.</p></article>
-      <article class="card"><h3>Data Analysis</h3><p>Using data to guide design decisions.</p></article>
+    <div class="bento">
+      <article class="card b-wide c-lav"><h3>Level &amp; Feature Design</h3><p>New mechanics, progression and difficulty balancing across hundreds of levels.</p></article>
+      <article class="card c-lime"><h3>Game Design Documentation</h3><p>Feature documents covering player experience, rules, balancing, FTUE, edge cases and implementation needs.</p></article>
+      <article class="card c-sky"><h3>Data Analysis</h3><p>Using data to guide design decisions.</p></article>
+      <article class="card c-gold"><h3>Game Ideation &amp; Pitching</h3><p>Shaping game ideas and pitching them.</p></article>
       <article class="card"><h3>Stakeholder Communication</h3><p>Working closely with designers, artists, developers and producers.</p></article>
-      <article class="card"><h3>Team Leadership &amp; Coordination</h3><p>Leading level designers, mentoring and reviewing daily output.</p></article>
-    </div>
-
-    <div class="card tools">
-      <h3>Tools</h3>
-      <ul class="chips">
-        <li>Unity</li>
-        <li>Unreal Engine</li>
-        <li>Autodesk Maya</li>
-        <li>Adobe Photoshop</li>
-        <li>Adobe Illustrator</li>
-      </ul>
-    </div>
-
-    <div class="grid two">
-      <div class="card">
-        <h3>Work experience</h3>
-        <ol class="timeline">
-          <li><b>Amgo Games</b><span>Game Designer</span><time>Mar 2025 – Present</time></li>
-          <li><b>SuperHead LLP</b><span>Game Designer</span><time>May 2024 – Jan 2025</time></li>
-          <li><b>BooBoo Games</b><span>Jr. Game Designer</span><time>Dec 2022 – Feb 2024</time></li>
-          <li><b>Crazy Labs</b><span>Intern &amp; Game Designer</span><time>Nov 2021 – Nov 2022</time></li>
-        </ol>
+      <article class="card b-wide c-coral"><h3>Team Leadership &amp; Coordination</h3><p>Leading level designers, mentoring and reviewing daily output.</p></article>
+      <div class="card b-full tools">
+        <h3>Tools</h3>
+        <ul class="chips"><li>Unity</li><li>Unreal Engine</li><li>Autodesk Maya</li><li>Adobe Photoshop</li><li>Adobe Illustrator</li></ul>
       </div>
-      <figure class="card quote">
-        <blockquote>“It was a pleasure working with C. Hemasailesh. He is innovative, dependable, and a strong team player who consistently delivers value.”</blockquote>
-        <figcaption><img src="assets/toshik.jpg" alt="" width="56" height="56"><span><b>Toshik Khatri</b>CEO, Superhead Studios</span></figcaption>
-      </figure>
     </div>
   </section>
 
+  <section class="wrap section" id="journey">
+    <p class="eyebrow">Career journey</p>
+    <h2>Levels completed</h2>
+    <ol class="timeline">
+      <li><time>Mar 2025 – Present</time><b>Amgo Games</b><span>Game Designer</span></li>
+      <li><time>May 2024 – Jan 2025</time><b>SuperHead LLP</b><span>Game Designer</span></li>
+      <li><time>Dec 2022 – Feb 2024</time><b>BooBoo Games</b><span>Jr. Game Designer</span></li>
+      <li><time>Nov 2021 – Nov 2022</time><b>Crazy Labs</b><span>Intern &amp; Game Designer</span></li>
+    </ol>
+  </section>
+
+  <section class="wrap section">
+    <figure class="quote">
+      <blockquote>“It was a pleasure working with C. Hemasailesh. He is innovative, dependable, and a strong team player who consistently delivers value.”</blockquote>
+      <figcaption><img src="assets/toshik.jpg" alt="" width="64" height="64" loading="lazy"><span><b>Toshik Khatri</b>CEO, Superhead Studios</span></figcaption>
+    </figure>
+  </section>
+
   <section class="wrap section" id="contact">
-    <div class="card contact">
+    <div class="contact">
       <div>
+        <p class="eyebrow">Next level</p>
         <h2>Let's turn your <em>ideas into reality</em> ✦</h2>
         <p>Let's collaborate to build something big!</p>
         <p><a href="mailto:shailuharely@gmail.com">shailuharely@gmail.com</a></p>
@@ -230,7 +263,7 @@
           </select>
         </label>
         <label>Message (optional) <textarea name="message" rows="4"></textarea></label>
-        <button class="btn" type="submit">Write the email</button>
+        <button class="btn lime wide" type="submit">Write the email</button>
         <p><small>This opens a ready-to-send message in your email app.</small></p>
       </form>
     </div>
