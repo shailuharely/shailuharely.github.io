@@ -35,6 +35,17 @@ if (box) {
 // Animations
 const calmMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Run a handler at most once per screen refresh, so scrolling stays smooth
+const perFrame = handler => {
+  let queued = false, latest;
+  return event => {
+    latest = event;
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; handler(latest); });
+  };
+};
+
 // Scroll progress bar
 const progress = document.querySelector('.progress');
 if (progress) {
@@ -42,7 +53,7 @@ if (progress) {
     const max = document.documentElement.scrollHeight - innerHeight;
     progress.style.transform = 'scaleX(' + (max > 0 ? scrollY / max : 0) + ')';
   };
-  addEventListener('scroll', update, { passive: true });
+  addEventListener('scroll', perFrame(update), { passive: true });
   update();
 }
 
@@ -65,16 +76,16 @@ const revealer = new IntersectionObserver(entries => entries.forEach(e => {
   const [, target, suffix] = number.textContent.match(/(\d+)(.*)/);
   const began = performance.now();
   const step = now => {
-    const t = Math.min((now - began) / 900, 1);
+    const t = Math.min((now - began) / 600, 1);
     number.textContent = Math.round(target * (1 - Math.pow(1 - t, 3))) + suffix;
     if (t < 1) requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
-}), { threshold: 0.12 });
+}), { threshold: 0.05 });
 document.querySelectorAll('.stats>div, .logos, main h2, .feature, .role-box li, .games .card, .bento .card, .timeline li, .quote, .contact, .challenge, .case figure, .grad figure')
   .forEach((el, i) => {
     el.classList.add('reveal');
-    el.style.transitionDelay = (i % 4) * 60 + 'ms';
+    el.style.transitionDelay = (i % 4) * 40 + 'ms';
     // Drop the stagger once shown, so hover effects respond immediately
     el.addEventListener('transitionend', () => { el.style.transitionDelay = ''; }, { once: true });
     revealer.observe(el);
@@ -83,11 +94,14 @@ document.querySelectorAll('.stats>div, .logos, main h2, .feature, .role-box li, 
 // Floating hero icons follow the pointer a little
 const stage = document.getElementById('stage');
 if (stage && !calmMotion) {
-  addEventListener('pointermove', e => {
+  addEventListener('pointermove', perFrame(e => {
+    if (stage.classList.contains('resting')) return;
     stage.style.setProperty('--mx', (e.clientX / innerWidth - 0.5).toFixed(3));
     stage.style.setProperty('--my', (e.clientY / innerHeight - 0.5).toFixed(3));
-  }, { passive: true });
+  }), { passive: true });
 }
+// Pause the looping hero animations once they are off screen
+if (stage) new IntersectionObserver(entries => stage.classList.toggle('resting', !entries[0].isIntersecting)).observe(stage);
 
 // Game icons: a different hover effect every time, and rotating icons around the portrait
 const EFFECTS = ['spin', 'jelly', 'hop', 'flip', 'wiggle', 'zoomy'];
@@ -197,7 +211,37 @@ if (career) {
       job.classList.toggle('reached', amount >= at);
     });
   };
-  addEventListener('scroll', fill, { passive: true });
-  addEventListener('resize', fill);
+  addEventListener('scroll', perFrame(fill), { passive: true });
+  addEventListener('resize', perFrame(fill));
   fill();
+}
+
+// Three puzzle tiles drop and snap into line under each section heading
+document.querySelectorAll('main h2').forEach(heading => {
+  const tiles = document.createElement('span');
+  tiles.className = 'tiles';
+  tiles.setAttribute('aria-hidden', 'true');
+  tiles.innerHTML = '<i></i><i></i><i></i>';
+  heading.appendChild(tiles);
+});
+
+// Tap pop: little puzzle pieces fly out wherever the visitor clicks or taps
+if (!calmMotion && Element.prototype.animate) {
+  const colours = ['#D5F45B', '#75C7FF', '#FF8A65', '#B9ABFF', '#FFD166'];
+  addEventListener('click', e => {
+    // Keyboard clicks have no position, and form fields should stay calm
+    if (!e.detail || e.target.closest('input, textarea, select, label, dialog')) return;
+    for (let i = 0; i < 6; i++) {
+      const piece = document.createElement('span');
+      piece.className = 'pop-piece';
+      piece.style.cssText = 'left:' + (e.clientX - 5) + 'px;top:' + (e.clientY - 5) + 'px;background:' +
+        colours[(i + e.clientX) % colours.length] + ';border-radius:' + (i % 2 ? '50%' : '3px');
+      document.body.appendChild(piece);
+      const angle = Math.PI * 2 * i / 6, reach = 34 + Math.random() * 18;
+      piece.animate([
+        { transform: 'translate(0,0) scale(1) rotate(0deg)', opacity: 1 },
+        { transform: 'translate(' + Math.cos(angle) * reach + 'px,' + Math.sin(angle) * reach + 'px) scale(.2) rotate(180deg)', opacity: 0 }
+      ], { duration: 450, easing: 'cubic-bezier(.22,1,.36,1)' }).onfinish = () => piece.remove();
+    }
+  });
 }

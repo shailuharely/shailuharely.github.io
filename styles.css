@@ -29,7 +29,7 @@ h3{font-size:1.2rem;margin-bottom:.5rem}
 .btn.wide{width:100%}
 
 /* Nav */
-.nav{position:sticky;top:14px;z-index:15;width:min(1200px,100% - 2rem);margin:14px auto 0;display:flex;align-items:center;justify-content:space-between;padding:.6rem .7rem .6rem 1.2rem;background:rgba(24,26,38,.88);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:18px;box-shadow:0 6px 24px rgba(0,0,0,.45)}
+.nav{position:sticky;top:14px;z-index:15;width:min(1200px,100% - 2rem);margin:14px auto 0;display:flex;align-items:center;justify-content:space-between;padding:.6rem .7rem .6rem 1.2rem;background:rgba(24,26,38,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 6px 24px rgba(0,0,0,.45)}
 .brand{font:700 1.15rem "Space Grotesk",sans-serif;color:var(--ink);text-decoration:none}
 .spark{color:var(--lime);display:inline-block}
 .brand:hover .spark{animation:spin .8s var(--ease)}
@@ -60,18 +60,18 @@ h3{font-size:1.2rem;margin-bottom:.5rem}
 .s3{width:30px;height:30px;background:var(--gold);clip-path:polygon(50% 0,100% 100%,0 100%);right:9%;bottom:6%;animation-delay:-1s}
 @keyframes bob{50%{transform:translateY(-9px)}}
 @keyframes spin{to{transform:rotate(180deg)}}
-.js .hero-copy>*{animation:rise .6s var(--ease) both}
+.js .hero-copy>*{animation:rise .4s var(--ease) both}
 .js .hero-copy>:nth-child(2){animation-delay:.07s}
 .js .hero-copy>:nth-child(3){animation-delay:.14s}
 .js .hero-copy>:nth-child(4){animation-delay:.21s}
 .js .hero-copy>:nth-child(5){animation-delay:.28s}
-.js .hero-portrait{animation:fade .8s var(--ease) both}
+.js .hero-portrait{animation:fade .45s var(--ease)}
 @keyframes rise{from{opacity:0;transform:translateY(22px)}}
-@keyframes fade{from{opacity:0;translate:0 24px}}
+@keyframes fade{from{translate:0 18px}}
 
 /* Scroll reveal */
-.js .reveal{opacity:0;transform:translateY(22px)}
-.js .reveal.in{opacity:1;transform:none;transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.js .reveal{opacity:0;transform:translateY(14px)}
+.js .reveal.in{opacity:1;transform:none;transition:opacity .35s var(--ease),transform .35s var(--ease)}
 
 /* Scoreboard */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-top:3rem}
@@ -246,17 +246,15 @@ dialog img{width:100%}
 
 /* Soft background glows */
 body::before{content:"";position:fixed;inset:-20vmax;z-index:-1;pointer-events:none;
-  background:radial-gradient(38vmax 38vmax at 78% 22%,rgba(105,82,245,.22),transparent 70%),radial-gradient(34vmax 34vmax at 18% 58%,rgba(40,110,255,.14),transparent 70%),radial-gradient(30vmax 30vmax at 68% 84%,rgba(168,70,230,.13),transparent 70%);
-  animation:drift 24s ease-in-out infinite alternate}
-@keyframes drift{to{transform:translate3d(5vmax,-4vmax,0) scale(1.08)}}
+  background:radial-gradient(38vmax 38vmax at 78% 22%,rgba(105,82,245,.22),transparent 70%),radial-gradient(34vmax 34vmax at 18% 58%,rgba(40,110,255,.14),transparent 70%),radial-gradient(30vmax 30vmax at 68% 84%,rgba(168,70,230,.13),transparent 70%);}
 
 /* Glowing gradient borders on the two most important cards */
 @property --turn{syntax:"<angle>";inherits:false;initial-value:0deg}
 .feature,.contact{position:relative;box-shadow:0 0 44px rgba(105,82,245,.22)}
 .feature::after,.contact::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:2px;pointer-events:none;
   background:conic-gradient(from var(--turn),var(--primary),var(--sky),var(--lime),var(--coral),var(--primary));
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
-  animation:turn 9s linear infinite}
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;}
+.feature:hover::after,.contact:hover::after{animation:turn 6s linear infinite}
 @keyframes turn{to{--turn:360deg}}
 
 /* Cursor spotlight */
@@ -267,8 +265,8 @@ body::before{content:"";position:fixed;inset:-20vmax;z-index:-1;pointer-events:n
 
 /* Headline reveal */
 .js .hero-copy>.split{animation:none}
-.word{display:inline-block;animation:wordin .7s var(--ease) both;animation-delay:calc(var(--i) * 90ms + .1s)}
-@keyframes wordin{from{opacity:0;transform:translateY(.6em) rotate(4deg);filter:blur(6px)}}
+.word{display:inline-block;animation:wordin .45s var(--ease) both;animation-delay:calc(var(--i) * 45ms)}
+@keyframes wordin{from{opacity:0;transform:translateY(.6em) rotate(4deg)}}
 
 /* Career line: across the top on wide screens */
 .timeline{position:relative;padding-top:34px;--fill:0}
@@ -283,4 +281,35 @@ body::before{content:"";position:fixed;inset:-20vmax;z-index:-1;pointer-events:n
   .timeline::after{background:linear-gradient(180deg,var(--primary),var(--sky),var(--lime));transform-origin:top;transform:scaleY(var(--fill))}
   .timeline li::after{left:-34px;top:20px}
 }
-@media (prefers-reduced-motion:reduce){body::before,.feature::after,.contact::after{animation:none}}
+@media (prefers-reduced-motion:reduce){.feature::after,.contact::after{animation:none!important}}
+
+/* Looping hero animations pause off screen */
+.stage.resting *{animation-play-state:paused!important}
+
+/* Puzzle tiles under section headings */
+.tiles{display:flex;gap:6px;margin-top:.6rem}
+.contact .tiles{margin-bottom:.25rem}
+.quote .tiles{justify-content:center}
+.tiles i{width:16px;height:16px;border-radius:5px;background:var(--primary)}
+.tiles i:nth-child(2){background:var(--lime)}
+.tiles i:nth-child(3){background:var(--coral)}
+h2.in .tiles i{animation:snap .55s var(--ease) both}
+h2.in .tiles i:nth-child(2){animation-delay:.1s}
+h2.in .tiles i:nth-child(3){animation-delay:.2s}
+@keyframes snap{0%{opacity:0;transform:translateY(-26px) rotate(-90deg)}65%{opacity:1;transform:translateY(3px) scale(1.18,.82)}100%{transform:none}}
+
+/* Role steps light up one after another: prototype, design, documents, delivery */
+.role-box li{position:relative}
+.role-box li::before{content:"";position:absolute;inset:-1px;border:2px solid var(--lime);border-radius:inherit;opacity:0;pointer-events:none}
+.role-box li.in::before{animation:step .8s ease both}
+.role-box li.in:nth-child(2)::before{animation-delay:.3s}
+.role-box li.in:nth-child(3)::before{animation-delay:.6s}
+.role-box li.in:nth-child(4)::before{animation-delay:.9s}
+@keyframes step{40%{opacity:1;transform:scale(1.03)}}
+
+/* A career dot pops when the line reaches it */
+.timeline li.reached::after{animation:dotpop .45s var(--ease)}
+@keyframes dotpop{50%{transform:scale(1.6)}}
+
+/* Tap pop pieces */
+.pop-piece{position:fixed;width:10px;height:10px;pointer-events:none;z-index:40}
