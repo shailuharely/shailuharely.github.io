@@ -42,7 +42,7 @@ h3{font-size:1.2rem;margin-bottom:.5rem}
 /* Hero */
 .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:2rem;align-items:center;padding-top:3.5rem}
 .role{font:700 1.3rem "Space Grotesk",sans-serif;margin:1.25rem 0 .75rem}
-.role span{color:var(--lime)}
+.role span:not(.word){color:var(--lime)}
 .lead{color:var(--muted);font-size:1.1rem;max-width:56ch}
 .actions{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}
 .stage{position:relative;height:540px;--mx:0;--my:0}
@@ -177,7 +177,7 @@ dialog img{width:100%}
 
 @media (max-width:1000px){
   .games{grid-template-columns:repeat(3,1fr)}
-  .role-box,.timeline,.bento{grid-template-columns:repeat(2,1fr)}
+  .role-box,.bento{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:860px){
   .menu-btn{display:block}
@@ -243,3 +243,44 @@ dialog img{width:100%}
 /* Keep icon name labels inside the screen */
 .f1 .tip,.f3 .tip{left:0;translate:0}
 .f2 .tip,.f4 .tip{left:auto;right:0;translate:0}
+
+/* Soft background glows */
+body::before{content:"";position:fixed;inset:-20vmax;z-index:-1;pointer-events:none;
+  background:radial-gradient(38vmax 38vmax at 78% 22%,rgba(105,82,245,.22),transparent 70%),radial-gradient(34vmax 34vmax at 18% 58%,rgba(40,110,255,.14),transparent 70%),radial-gradient(30vmax 30vmax at 68% 84%,rgba(168,70,230,.13),transparent 70%);
+  animation:drift 24s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(5vmax,-4vmax,0) scale(1.08)}}
+
+/* Glowing gradient borders on the two most important cards */
+@property --turn{syntax:"<angle>";inherits:false;initial-value:0deg}
+.feature,.contact{position:relative;box-shadow:0 0 44px rgba(105,82,245,.22)}
+.feature::after,.contact::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:2px;pointer-events:none;
+  background:conic-gradient(from var(--turn),var(--primary),var(--sky),var(--lime),var(--coral),var(--primary));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  animation:turn 9s linear infinite}
+@keyframes turn{to{--turn:360deg}}
+
+/* Cursor spotlight */
+.lit-card{position:relative}
+.spotlight{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .25s;
+  background:radial-gradient(230px circle at var(--sx,50%) var(--sy,50%),rgba(150,130,255,.2),transparent 65%)}
+.lit-card:hover>.spotlight{opacity:1}
+
+/* Headline reveal */
+.js .hero-copy>.split{animation:none}
+.word{display:inline-block;animation:wordin .7s var(--ease) both;animation-delay:calc(var(--i) * 90ms + .1s)}
+@keyframes wordin{from{opacity:0;transform:translateY(.6em) rotate(4deg);filter:blur(6px)}}
+
+/* Career line: across the top on wide screens */
+.timeline{position:relative;padding-top:34px;--fill:0}
+.timeline::before,.timeline::after{content:"";position:absolute;left:0;top:7px;width:100%;height:4px;border-radius:4px;background:var(--line)}
+.timeline::after{background:linear-gradient(90deg,var(--primary),var(--sky),var(--lime));transform-origin:left;transform:scaleX(var(--fill));transition:transform .15s linear}
+.timeline li::after{content:"";position:absolute;z-index:1;left:24px;top:-34px;width:18px;height:18px;border-radius:50%;background:var(--canvas);border:3px solid var(--edge);transition:.25s}
+.timeline li.reached::after{background:var(--lime);border-color:var(--lime);box-shadow:0 0 14px rgba(213,244,91,.8)}
+/* Down the left side on narrow screens */
+@media (max-width:1000px){
+  .timeline{grid-template-columns:1fr;padding:0 0 0 34px}
+  .timeline::before,.timeline::after{left:7px;top:0;width:4px;height:100%}
+  .timeline::after{background:linear-gradient(180deg,var(--primary),var(--sky),var(--lime));transform-origin:top;transform:scaleY(var(--fill))}
+  .timeline li::after{left:-34px;top:20px}
+}
+@media (prefers-reduced-motion:reduce){body::before,.feature::after,.contact::after{animation:none}}

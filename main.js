@@ -143,3 +143,61 @@ if (slots.length) {
     swapIcon(slots[turn++ % slots.length]);
   }, 3200);
 }
+
+// Headline reveal: the name and role arrive one word at a time
+let wordCount = 0;
+function splitWords(node) {
+  [...node.childNodes].forEach(child => {
+    if (child.nodeType === Node.ELEMENT_NODE) return splitWords(child);
+    const parts = child.textContent.split(/( +)/).filter(Boolean);
+    child.replaceWith(...parts.map(part => {
+      if (!part.trim()) return document.createTextNode(part);
+      const word = document.createElement('span');
+      word.className = 'word';
+      word.style.setProperty('--i', wordCount++);
+      word.textContent = part;
+      return word;
+    }));
+  });
+}
+if (!calmMotion) document.querySelectorAll('.hero-copy h1, .hero-copy .role').forEach(el => {
+  el.classList.add('split');
+  splitWords(el);
+});
+
+// Cursor spotlight: a soft light follows the mouse across cards
+if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  document.querySelectorAll('.games .card, .bento .card, .timeline li, .role-box li, .feature').forEach(card => {
+    const light = document.createElement('i');
+    light.className = 'spotlight';
+    light.setAttribute('aria-hidden', 'true');
+    card.classList.add('lit-card');
+    card.appendChild(light);
+    card.addEventListener('pointermove', e => {
+      const r = card.getBoundingClientRect();
+      light.style.setProperty('--sx', (e.clientX - r.left) + 'px');
+      light.style.setProperty('--sy', (e.clientY - r.top) + 'px');
+    });
+  });
+}
+
+// Career line: fills as the visitor scrolls through the jobs
+const career = document.querySelector('.timeline');
+if (career) {
+  const jobs = [...career.children];
+  const fill = () => {
+    const r = career.getBoundingClientRect();
+    const amount = calmMotion ? 1 : Math.max(0, Math.min(1, (innerHeight * 0.9 - r.top) / (r.height + innerHeight * 0.3)));
+    career.style.setProperty('--fill', amount.toFixed(3));
+    // Side by side on wide screens, stacked on narrow ones
+    const across = jobs[1].offsetTop === jobs[0].offsetTop;
+    jobs.forEach(job => {
+      // The timeline is positioned, so these offsets are measured from its own corner
+      const at = across ? (job.offsetLeft + 33) / r.width : (job.offsetTop + 29) / r.height;
+      job.classList.toggle('reached', amount >= at);
+    });
+  };
+  addEventListener('scroll', fill, { passive: true });
+  addEventListener('resize', fill);
+  fill();
+}
