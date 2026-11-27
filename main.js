@@ -245,3 +245,92 @@ if (!calmMotion && Element.prototype.animate) {
     }
   });
 }
+
+// Scrolling strip of game icons under the studio logos (built from the game library)
+const logoRow = document.querySelector('.logos');
+const library = [...document.querySelectorAll('.games .icon-link')];
+if (logoRow && library.length) {
+  const strip = document.createElement('div');
+  strip.className = 'strip';
+  const track = strip.appendChild(document.createElement('div'));
+  track.className = 'strip-track';
+  // Two identical halves make the loop seamless; only the first set is read or tabbed to
+  for (let copy = 0; copy < 6; copy++) library.forEach(source => {
+    const link = source.cloneNode(true);
+    link.className = 'strip-icon';
+    link.querySelector('img').removeAttribute('loading');
+    if (copy) { link.tabIndex = -1; link.setAttribute('aria-hidden', 'true'); }
+    track.appendChild(link);
+  });
+  logoRow.after(strip);
+  new IntersectionObserver(entries => strip.classList.toggle('resting', !entries[0].isIntersecting)).observe(strip);
+}
+
+// 3D tilt: game cards lean toward the mouse
+if (!calmMotion && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  document.querySelectorAll('.games .card').forEach(card => {
+    card.addEventListener('pointermove', e => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--ry', (((e.clientX - r.left) / r.width - 0.5) * 9).toFixed(2) + 'deg');
+      card.style.setProperty('--rx', (((e.clientY - r.top) / r.height - 0.5) * -9).toFixed(2) + 'deg');
+    });
+    card.addEventListener('pointerleave', () => { card.style.removeProperty('--rx'); card.style.removeProperty('--ry'); });
+  });
+}
+
+// Copy email, with a short confirmation
+document.querySelectorAll('.copy-email').forEach(button => {
+  const label = button.textContent;
+  let timer;
+  button.setAttribute('aria-live', 'polite');
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(button.dataset.email);
+      button.textContent = '✓ Copied';
+    } catch {
+      button.textContent = button.dataset.email;
+    }
+    clearTimeout(timer);
+    timer = setTimeout(() => { button.textContent = label; }, 2200);
+  });
+});
+
+// Back to top, with a ring showing how far down the page you are
+const topButton = document.createElement('button');
+topButton.type = 'button';
+topButton.className = 'to-top';
+topButton.setAttribute('aria-label', 'Back to top');
+topButton.innerHTML = '<svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="19"/><circle class="ring" cx="22" cy="22" r="19" pathLength="100"/></svg><span aria-hidden="true">↑</span>';
+topButton.addEventListener('click', () => scrollTo({ top: 0, behavior: calmMotion ? 'auto' : 'smooth' }));
+document.body.appendChild(topButton);
+const showTop = () => {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  topButton.classList.toggle('visible', scrollY > 600);
+  topButton.style.setProperty('--done', max > 0 ? Math.min(100, scrollY / max * 100) : 0);
+};
+addEventListener('scroll', perFrame(showTop), { passive: true });
+showTop();
+
+// Case study: mark the section being read in the jump links
+const jumps = [...document.querySelectorAll('.jump a')];
+if (jumps.length) {
+  const targets = jumps.map(a => document.querySelector(a.hash));
+  const mark = () => {
+    let current = -1;
+    targets.forEach((target, i) => { if (target.getBoundingClientRect().top < innerHeight * 0.45) current = i; });
+    jumps.forEach((a, i) => {
+      a.classList.toggle('active', i === current);
+      if (i === current) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+  };
+  addEventListener('scroll', perFrame(mark), { passive: true });
+  mark();
+}
+
+// Problem, action and result light up in order when they scroll into view
+const flowWatcher = new IntersectionObserver(entries => entries.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add('lit');
+  flowWatcher.unobserve(e.target);
+}), { threshold: 0.6 });
+document.querySelectorAll('.flow').forEach(flow => flowWatcher.observe(flow));
