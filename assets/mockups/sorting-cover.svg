@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 665 569" font-family="Segoe UI, Arial, sans-serif" role="img" aria-labelledby="title description">
+  <title id="title">Card-sorting puzzle cover</title>
+  <desc id="description">A pear, a ringed planet, and a scallop shell drift toward trays marked Fruit, Space, and Ocean.</desc>
+  <defs>
+    <radialGradient id="glow" cx=".5" cy=".42" r=".58">
+      <stop stop-color="#6952F5" stop-opacity=".24"/>
+      <stop offset="1" stop-color="#6952F5" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="665" height="569" fill="#14151F"/>
+
+  <rect x="425" y="26" width="212" height="36" rx="18" fill="#1E2030" stroke="#3C4058" stroke-width="2"/>
+  <text x="531" y="50" text-anchor="middle" fill="#F3F3FA" font-size="16" font-weight="700" letter-spacing="1">ILLUSTRATIVE MOCKUP</text>
+
+  <rect x="28" y="88" width="609" height="453" rx="34" fill="#1E2030" stroke="#3C4058" stroke-width="2"/>
+  <rect x="29" y="89" width="607" height="451" rx="33" fill="url(#glow)"/>
+  <path d="M53 161v-23a24 24 0 0 1 24-24h24m463 0h24a24 24 0 0 1 24 24v23" fill="none" stroke="#3C4058" stroke-width="2"/>
+
+  <g fill="none" stroke-linecap="round">
+    <path d="M76 187v16m-8-8h16m330-57v20m-10-10h20" stroke="#D5F45B" stroke-width="2.5"/>
+    <path d="M225 148v14m-7-7h14m347 17v16m-8-8h16" stroke="#75C7FF" stroke-width="2.5"/>
+    <path d="M86 302l-12 6m21 5-19 14m505-33 13 8m-17 3 16 16" stroke="#6952F5" stroke-width="3"/>
+  </g>
+  <circle cx="181" cy="140" r="3" fill="#FF8A65"/>
+  <circle cx="450" cy="197" r="3" fill="#75C7FF"/>
+  <circle cx="237" cy="290" r="4" fill="#D5F45B"/>
+  <circle cx="429" cy="276" r="3" fill="#FF8A65"/>
+
+  <g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M136 317q-3 23 14 44m-8-1 9 3 1-10" stroke="#D5F45B"/>
+    <path d="M333 292v55m-7-8 7 9 7-9" stroke="#FF8A65"/>
+    <path d="M526 335q3 20-12 33m9-2-10 4v-10" stroke="#75C7FF"/>
+  </g>
+
+  <g transform="translate(83 201) rotate(-13 61 64)">
+    <rect y="7" width="122" height="132" rx="20" fill="#10111B" opacity=".8"/>
+    <rect width="122" height="132" rx="20" fill="#252839" stroke="#D5F45B" stroke-width="2"/>
+    <rect x="9" y="9" width="104" height="114" rx="14" fill="#D5F45B" fill-opacity=".08"/>
+    <path d="M62 49q-4-13 5-22" fill="none" stroke="#FF8A65" stroke-width="4" stroke-linecap="round"/>
+    <path d="M65 38q4-16 23-13-5 14-23 13Z" fill="#D5F45B"/>
+    <path d="M61 44c-13 0-13 16-23 27-15 18-4 34 22 35 27 1 40-15 25-34-10-11-11-28-24-28Z" fill="#D5F45B"/>
+    <path d="M49 69q-8 10-8 17" fill="none" stroke="#F3F3FA" stroke-opacity=".8" stroke-width="4" stroke-linecap="round"/>
+    <path d="M63 102q18-4 21-17" fill="none" stroke="#A9CC3F" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(267 138) rotate(9 65 72)">
+    <rect y="8" width="130" height="146" rx="22" fill="#10111B" opacity=".8"/>
+    <rect width="130" height="146" rx="22" fill="#302759" stroke="#9887FF" stroke-width="2.5"/>
+    <rect x="9" y="9" width="112" height="128" rx="15" fill="#6952F5" fill-opacity=".21"/>
+    <circle cx="65" cy="73" r="31" fill="#FF8A65"/>
+    <path d="M40 55q21 6 40 0m-44 27q21 8 57-8m-47 20q16 4 35-3" fill="none" stroke="#FFD0BC" stroke-width="4" stroke-linecap="round"/>
+    <path d="M35 72c-14 11-21 20-18 25 4 7 29 2 56-13 27-14 46-31 42-37-2-5-12-4-26 0" fill="none" stroke="#F3F3FA" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M29 37v12m-6-6h12m66 56v12m-6-6h12" stroke="#D5F45B" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="46" cy="115" r="2.5" fill="#75C7FF"/>
+  </g>
+
+  <g transform="translate(465 213) rotate(15 61 65)">
+    <rect y="7" width="122" height="132" rx="20" fill="#10111B" opacity=".8"/>
+    <rect width="122" height="132" rx="20" fill="#232B40" stroke="#75C7FF" stroke-width="2"/>
+    <rect x="9" y="9" width="104" height="114" rx="14" fill="#75C7FF" fill-opacity=".10"/>
+    <path d="M53 101 25 76c-12-12-1-28 10-27 0-11 13-17 22-11 8-9 22-4 26 5 12-3 24 10 19 20 9 6 8 17-1 23l-33 18q-8 4-15-3Z" fill="#75C7FF"/>
+    <path d="M58 96 35 56m27 41-5-51m9 52 17-47m-12 48 27-27" fill="none" stroke="#37688C" stroke-width="3" stroke-linecap="round"/>
+    <path d="M51 99q11 7 23 1l-4 9q-9 6-18-1Z" fill="#C5EAFF"/>
+    <circle cx="27" cy="34" r="3" fill="#F3F3FA"/>
+    <circle cx="94" cy="101" r="3" fill="#F3F3FA"/>
+  </g>
+
+  <g fill="#14151F" stroke="#3C4058" stroke-width="2">
+    <rect x="62" y="384" width="170" height="122" rx="22"/>
+    <rect x="248" y="384" width="170" height="122" rx="22"/>
+    <rect x="434" y="384" width="170" height="122" rx="22"/>
+  </g>
+  <g stroke-width="2" stroke-dasharray="5 7" opacity=".8">
+    <rect x="76" y="398" width="142" height="53" rx="12" fill="#D5F45B" fill-opacity=".07" stroke="#D5F45B"/>
+    <rect x="262" y="398" width="142" height="53" rx="12" fill="#FF8A65" fill-opacity=".09" stroke="#FF8A65"/>
+    <rect x="448" y="398" width="142" height="53" rx="12" fill="#75C7FF" fill-opacity=".09" stroke="#75C7FF"/>
+  </g>
+  <g fill="none" stroke-width="2.5" stroke-linecap="round">
+    <path d="M137 423l10 8 10-8" stroke="#D5F45B"/>
+    <path d="M323 423l10 8 10-8" stroke="#FF8A65"/>
+    <path d="M509 423l10 8 10-8" stroke="#75C7FF"/>
+  </g>
+  <g fill="#F3F3FA" font-size="23" font-weight="700" text-anchor="middle">
+    <text x="147" y="484">Fruit</text>
+    <text x="333" y="484">Space</text>
+    <text x="519" y="484">Ocean</text>
+  </g>
+</svg>
