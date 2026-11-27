@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 860" role="img" aria-labelledby="title" font-family="Segoe UI, Arial, sans-serif">
+<title id="title">Fictional card mechanics inspector</title>
+<rect x="0" y="0" width="1600" height="860" rx="0" fill="#14151F" stroke="none"/>
+<text x="48" y="62" font-size="32" fill="#F3F3FA" font-weight="730" >Card inspector</text>
+<text x="49" y="96" font-size="17" fill="#B9BDD2" font-weight="500" >Card library / Fan shell</text>
+<rect x="48" y="128" width="661" height="684" rx="16" fill="#1E2030" stroke="#3C4058"/>
+<rect x="733" y="128" width="819" height="684" rx="16" fill="#1E2030" stroke="#3C4058"/>
+<text x="78" y="174" font-size="23" fill="#F3F3FA" font-weight="700" >Card preview</text>
+<text x="763" y="174" font-size="23" fill="#F3F3FA" font-weight="700" >Obstacles</text>
+<text x="763" y="205" font-size="17" fill="#B9BDD2" font-weight="500" >Toggle an obstacle to see it on the card.</text>
+<rect x="93" y="212" width="571" height="531" rx="12" fill="#171925" stroke="#3C4058"/>
+<rect x="235" y="259" width="288" height="413" rx="23" fill="#282E47" stroke="#75C7FF"/>
+<rect x="251" y="276" width="256" height="379" rx="16" fill="#263954" stroke="#4F7498"/>
+<rect x="273" y="300" width="102" height="35" rx="8" fill="#182538" stroke="none"/>
+<text x="324" y="323" font-size="16" fill="#75C7FF" font-weight="700" text-anchor="middle">Ocean</text>
+<g transform="translate(379 399) scale(2.3)">
+<path d="M0 47Q-51 34 -37 6Q-34 0 -25 4Q-24 -8 -12 -6Q-5 -14 0 -8Q5 -14 12 -6Q24 -8 25 4Q34 0 37 6Q51 34 0 47Z" fill="#75C7FF" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M0 39V1M-9 38L-17 2M9 38L17 2M-18 34L-29 10M18 34L29 10" fill="none" stroke="#285D88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<path d="M260 505L500 471M259 518L499 484" fill="none" stroke="#9C553F" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M260 502L500 468M259 515L499 481M368 500C348 465 389 467 393 489S369 509 368 500ZM383 493Q407 527 391 539" fill="none" stroke="#FF8A65" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<text x="379" y="609" font-size="27" fill="#F3F3FA" font-weight="700" text-anchor="middle">Fan shell</text>
+<circle cx="83" cy="778" r="5" fill="#FF8A65"/>
+<text x="98" y="784" font-size="16" fill="#B9BDD2" font-weight="500" >Rope active</text>
+<g transform="translate(763 230) scale(1)">
+<rect x="0" y="0" width="759" height="88" rx="12" fill="#25283A" stroke="#7868CC"/>
+<rect x="16" y="17" width="54" height="54" rx="10" fill="#191B2B" stroke="none"/>
+<g transform="translate(43 44) scale(1)">
+<path d="M-12 8C-22 -2 -4 -17 6 -7S16 16 4 14S-12 0 -5 -5M4 14L14 19" fill="none" stroke="#FF8A65" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<text x="87" y="35" font-size="20" fill="#F3F3FA" font-weight="700" >Rope</text>
+<text x="87" y="62" font-size="16" fill="#B9BDD2" font-weight="500" >Ties the card to its stack.</text>
+<text x="644" y="50" font-size="15" fill="#F3F3FA" font-weight="600" text-anchor="end">On</text>
+<rect x="662" y="27" width="72" height="34" rx="17" fill="#6952F5" stroke="none"/>
+<circle cx="716" cy="44" r="12" fill="#F3F3FA"/>
+</g>
+<g transform="translate(763 336) scale(1)">
+<rect x="0" y="0" width="759" height="88" rx="12" fill="#25283A" stroke="#3C4058"/>
+<rect x="16" y="17" width="54" height="54" rx="10" fill="#191B2B" stroke="none"/>
+<g transform="translate(43 44) scale(1)">
+<circle cx="0" cy="0" r="8" fill="#D5F45B"/>
+<path d="M0 -16V16M-16 0H16M-11 -11L11 11M11 -11L-11 11" fill="none" stroke="#D5F45B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<text x="87" y="35" font-size="20" fill="#F3F3FA" font-weight="700" >Infected</text>
+<text x="87" y="62" font-size="16" fill="#B9BDD2" font-weight="500" >Spreads to adjacent cards.</text>
+<text x="644" y="50" font-size="15" fill="#B9BDD2" font-weight="600" text-anchor="end">Off</text>
+<rect x="662" y="27" width="72" height="34" rx="17" fill="#34384E" stroke="#525873"/>
+<circle cx="680" cy="44" r="12" fill="#B9BDD2"/>
+</g>
+<g transform="translate(763 442) scale(1)">
+<rect x="0" y="0" width="759" height="88" rx="12" fill="#25283A" stroke="#3C4058"/>
+<rect x="16" y="17" width="54" height="54" rx="10" fill="#191B2B" stroke="none"/>
+<g transform="translate(43 44) scale(1)">
+<path d="M-13 -7L0 -15L13 -7V7L0 15L-13 7Z M-5 0H5M0 -5V5" fill="none" stroke="#B9BDD2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<text x="87" y="35" font-size="20" fill="#F3F3FA" font-weight="700" >Screw</text>
+<text x="87" y="62" font-size="16" fill="#B9BDD2" font-weight="500" >Locks the card in place.</text>
+<text x="644" y="50" font-size="15" fill="#B9BDD2" font-weight="600" text-anchor="end">Off</text>
+<rect x="662" y="27" width="72" height="34" rx="17" fill="#34384E" stroke="#525873"/>
+<circle cx="680" cy="44" r="12" fill="#B9BDD2"/>
+</g>
+<g transform="translate(763 548) scale(1)">
+<rect x="0" y="0" width="759" height="88" rx="12" fill="#25283A" stroke="#3C4058"/>
+<rect x="16" y="17" width="54" height="54" rx="10" fill="#191B2B" stroke="none"/>
+<g transform="translate(43 44) scale(1)">
+<path d="M0 -15V15M-13 -8L13 8M13 -8L-13 8M-5 -11L0 -6L5 -11M-5 11L0 6L5 11" fill="none" stroke="#75C7FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<text x="87" y="35" font-size="20" fill="#F3F3FA" font-weight="700" >Ice</text>
+<text x="87" y="62" font-size="16" fill="#B9BDD2" font-weight="500" >Covers the card in frost.</text>
+<text x="644" y="50" font-size="15" fill="#B9BDD2" font-weight="600" text-anchor="end">Off</text>
+<rect x="662" y="27" width="72" height="34" rx="17" fill="#34384E" stroke="#525873"/>
+<circle cx="680" cy="44" r="12" fill="#B9BDD2"/>
+</g>
+<g transform="translate(763 654) scale(1)">
+<rect x="0" y="0" width="759" height="88" rx="12" fill="#25283A" stroke="#3C4058"/>
+<rect x="16" y="17" width="54" height="54" rx="10" fill="#191B2B" stroke="none"/>
+<g transform="translate(43 44) scale(1)">
+<circle cx="0" cy="0" r="4" fill="#B9A9FF"/>
+<path d="M-16 0Q0 -19 16 0Q0 19 -16 0ZM-13 13L13 -13" fill="none" stroke="#B9A9FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<text x="87" y="35" font-size="20" fill="#F3F3FA" font-weight="700" >Hidden</text>
+<text x="87" y="62" font-size="16" fill="#B9BDD2" font-weight="500" >Conceals the card face.</text>
+<text x="644" y="50" font-size="15" fill="#B9BDD2" font-weight="600" text-anchor="end">Off</text>
+<rect x="662" y="27" width="72" height="34" rx="17" fill="#34384E" stroke="#525873"/>
+<circle cx="680" cy="44" r="12" fill="#B9BDD2"/>
+</g>
+<rect x="1348" y="24" width="224" height="42" rx="10" fill="#282541" stroke="#8170FB"/>
+<text x="1460" y="51" font-size="15" fill="#F3F3FA" font-weight="750" text-anchor="middle" letter-spacing="1">ILLUSTRATIVE MOCKUP</text>
+</svg>

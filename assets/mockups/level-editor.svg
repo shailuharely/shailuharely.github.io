@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 860" role="img" aria-labelledby="title" font-family="Segoe UI, Arial, sans-serif">
+<title id="title">Fictional puzzle level editor</title>
+<rect x="0" y="0" width="1600" height="860" rx="0" fill="#14151F" stroke="none"/>
+<text x="48" y="62" font-size="32" fill="#F3F3FA" font-weight="730" >Level editor</text>
+<text x="49" y="96" font-size="17" fill="#B9BDD2" font-weight="500" >Board layout / Sample puzzle</text>
+<rect x="48" y="125" width="1504" height="72" rx="12" fill="#1E2030" stroke="#3C4058"/>
+<rect x="64" y="140" width="100" height="42" rx="8" fill="#6952F5" stroke="none"/>
+<text x="114" y="167" font-size="16" fill="#F3F3FA" font-weight="650" text-anchor="middle">Select</text>
+<rect x="176" y="140" width="126" height="42" rx="8" fill="#282B40" stroke="#3C4058"/>
+<text x="239" y="167" font-size="16" fill="#F3F3FA" font-weight="650" text-anchor="middle">Add stack</text>
+<rect x="314" y="140" width="128" height="42" rx="8" fill="#282B40" stroke="#3C4058"/>
+<text x="378" y="167" font-size="16" fill="#F3F3FA" font-weight="650" text-anchor="middle">Add card</text>
+<rect x="454" y="140" width="92" height="42" rx="8" fill="#282B40" stroke="#3C4058"/>
+<text x="500" y="167" font-size="16" fill="#F3F3FA" font-weight="650" text-anchor="middle">Undo</text>
+<rect x="1372" y="140" width="164" height="42" rx="8" fill="#282B40" stroke="#3C4058"/>
+<text x="1454" y="167" font-size="16" fill="#F3F3FA" font-weight="650" text-anchor="middle">Preview board</text>
+<rect x="48" y="221" width="1062" height="591" rx="16" fill="#1E2030" stroke="#3C4058"/>
+<rect x="1134" y="221" width="418" height="591" rx="16" fill="#1E2030" stroke="#3C4058"/>
+<text x="76" y="265" font-size="22" fill="#F3F3FA" font-weight="700" >Card stacks</text>
+<text x="1080" y="264" font-size="15" fill="#B9BDD2" font-weight="500" text-anchor="end">Board canvas</text>
+<path d="M76 282H1082" fill="none" stroke="#3C4058" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+<g transform="translate(139 309) scale(1)">
+<rect x="14" y="0" width="220" height="151" rx="12" fill="#282B41" stroke="#3C4058"/>
+<rect x="7" y="7" width="220" height="151" rx="12" fill="#30344D" stroke="#3C4058"/>
+<rect x="0" y="14" width="220" height="151" rx="12" fill="#242738" stroke="#FF8A65"/>
+<rect x="13" y="27" width="70" height="24" rx="6" fill="#171926" stroke="none"/>
+<text x="48" y="44" font-size="13" fill="#FF8A65" font-weight="700" text-anchor="middle">Fruit</text>
+<g transform="translate(110 81) scale(0.87)">
+<path d="M0 1C-31 -19 -47 17 -26 42Q-13 56 0 46Q13 56 26 42C47 17 31 -19 0 1Z" fill="#FF8A65" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M0 2Q-2 -7 5 -17" fill="none" stroke="#D5F45B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M3 -6Q12 -23 28 -16Q25 -5 3 -6Z" fill="#D5F45B" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M-19 7Q-28 12 -23 22" fill="none" stroke="#FFE0CF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<text x="110" y="145" font-size="17" fill="#F3F3FA" font-weight="650" text-anchor="middle">Orchard apple</text>
+</g>
+<g transform="translate(442 309) scale(1)">
+<rect x="14" y="0" width="220" height="151" rx="12" fill="#282B41" stroke="#3C4058"/>
+<rect x="7" y="7" width="220" height="151" rx="12" fill="#30344D" stroke="#3C4058"/>
+<rect x="0" y="14" width="220" height="151" rx="12" fill="#242738" stroke="#3C4058"/>
+<rect x="13" y="27" width="70" height="24" rx="6" fill="#171926" stroke="none"/>
+<text x="48" y="44" font-size="13" fill="#B4A5FF" font-weight="700" text-anchor="middle">Space</text>
+<g transform="translate(110 81) scale(0.87)">
+<circle cx="0" cy="16" r="28" fill="#6952F5"/>
+<path d="M-32 29C-66 45 -34 53 13 39S66 4 35 9" fill="none" stroke="#75C7FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M-9 -1Q7 -3 14 7" fill="none" stroke="#C7BFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M43 -17V-3M36 -10H50" fill="none" stroke="#D5F45B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<text x="110" y="145" font-size="17" fill="#F3F3FA" font-weight="650" text-anchor="middle">Ringed moon</text>
+</g>
+<g transform="translate(745 309) scale(1)">
+<rect x="14" y="0" width="220" height="151" rx="12" fill="#282B41" stroke="#3C4058"/>
+<rect x="7" y="7" width="220" height="151" rx="12" fill="#30344D" stroke="#3C4058"/>
+<rect x="0" y="14" width="220" height="151" rx="12" fill="#242738" stroke="#3C4058"/>
+<rect x="13" y="27" width="70" height="24" rx="6" fill="#171926" stroke="none"/>
+<text x="48" y="44" font-size="13" fill="#75C7FF" font-weight="700" text-anchor="middle">Ocean</text>
+<g transform="translate(110 81) scale(0.87)">
+<path d="M0 47Q-51 34 -37 6Q-34 0 -25 4Q-24 -8 -12 -6Q-5 -14 0 -8Q5 -14 12 -6Q24 -8 25 4Q34 0 37 6Q51 34 0 47Z" fill="#75C7FF" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M0 39V1M-9 38L-17 2M9 38L17 2M-18 34L-29 10M18 34L29 10" fill="none" stroke="#285D88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<text x="110" y="145" font-size="17" fill="#F3F3FA" font-weight="650" text-anchor="middle">Fan shell</text>
+</g>
+<g transform="translate(139 529) scale(1)">
+<rect x="14" y="0" width="220" height="151" rx="12" fill="#282B41" stroke="#3C4058"/>
+<rect x="7" y="7" width="220" height="151" rx="12" fill="#30344D" stroke="#3C4058"/>
+<rect x="0" y="14" width="220" height="151" rx="12" fill="#242738" stroke="#3C4058"/>
+<rect x="13" y="27" width="70" height="24" rx="6" fill="#171926" stroke="none"/>
+<text x="48" y="44" font-size="13" fill="#75C7FF" font-weight="700" text-anchor="middle">Ocean</text>
+<g transform="translate(110 81) scale(0.87)">
+<path d="M0 47Q-51 34 -37 6Q-34 0 -25 4Q-24 -8 -12 -6Q-5 -14 0 -8Q5 -14 12 -6Q24 -8 25 4Q34 0 37 6Q51 34 0 47Z" fill="#75C7FF" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M0 39V1M-9 38L-17 2M9 38L17 2M-18 34L-29 10M18 34L29 10" fill="none" stroke="#285D88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<text x="110" y="145" font-size="17" fill="#F3F3FA" font-weight="650" text-anchor="middle">Fan shell</text>
+</g>
+<g transform="translate(442 529) scale(1)">
+<rect x="14" y="0" width="220" height="151" rx="12" fill="#282B41" stroke="#3C4058"/>
+<rect x="7" y="7" width="220" height="151" rx="12" fill="#30344D" stroke="#3C4058"/>
+<rect x="0" y="14" width="220" height="151" rx="12" fill="#242738" stroke="#3C4058"/>
+<rect x="13" y="27" width="70" height="24" rx="6" fill="#171926" stroke="none"/>
+<text x="48" y="44" font-size="13" fill="#FF8A65" font-weight="700" text-anchor="middle">Fruit</text>
+<g transform="translate(110 81) scale(0.87)">
+<path d="M0 1C-31 -19 -47 17 -26 42Q-13 56 0 46Q13 56 26 42C47 17 31 -19 0 1Z" fill="#FF8A65" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M0 2Q-2 -7 5 -17" fill="none" stroke="#D5F45B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M3 -6Q12 -23 28 -16Q25 -5 3 -6Z" fill="#D5F45B" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M-19 7Q-28 12 -23 22" fill="none" stroke="#FFE0CF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<text x="110" y="145" font-size="17" fill="#F3F3FA" font-weight="650" text-anchor="middle">Orchard apple</text>
+</g>
+<g transform="translate(745 529) scale(1)">
+<rect x="14" y="0" width="220" height="151" rx="12" fill="#282B41" stroke="#3C4058"/>
+<rect x="7" y="7" width="220" height="151" rx="12" fill="#30344D" stroke="#3C4058"/>
+<rect x="0" y="14" width="220" height="151" rx="12" fill="#242738" stroke="#3C4058"/>
+<rect x="13" y="27" width="70" height="24" rx="6" fill="#171926" stroke="none"/>
+<text x="48" y="44" font-size="13" fill="#B4A5FF" font-weight="700" text-anchor="middle">Space</text>
+<g transform="translate(110 81) scale(0.87)">
+<circle cx="0" cy="16" r="28" fill="#6952F5"/>
+<path d="M-32 29C-66 45 -34 53 13 39S66 4 35 9" fill="none" stroke="#75C7FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M-9 -1Q7 -3 14 7" fill="none" stroke="#C7BFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M43 -17V-3M36 -10H50" fill="none" stroke="#D5F45B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<text x="110" y="145" font-size="17" fill="#F3F3FA" font-weight="650" text-anchor="middle">Ringed moon</text>
+</g>
+<text x="76" y="781" font-size="16" fill="#B9BDD2" font-weight="500" >Select a stack to edit its cards.</text>
+<text x="1160" y="265" font-size="22" fill="#F3F3FA" font-weight="700" >Category settings</text>
+<text x="1160" y="297" font-size="15" fill="#B9BDD2" font-weight="600" >Category</text>
+<text x="1528" y="297" font-size="15" fill="#B9BDD2" font-weight="600" text-anchor="end">Status</text>
+<g transform="translate(1160 313) scale(1)">
+<rect x="0" y="0" width="368" height="61" rx="9" fill="#25283A" stroke="#FF8A65"/>
+<circle cx="23" cy="30" r="7" fill="#FF8A65"/>
+<text x="42" y="37" font-size="18" fill="#F3F3FA" font-weight="650" >Fruit</text>
+<text x="349" y="36" font-size="15" fill="#B9BDD2" font-weight="550" text-anchor="end">Enabled</text>
+</g>
+<g transform="translate(1160 389) scale(1)">
+<rect x="0" y="0" width="368" height="61" rx="9" fill="#25283A" stroke="#3C4058"/>
+<circle cx="23" cy="30" r="7" fill="#B4A5FF"/>
+<text x="42" y="37" font-size="18" fill="#F3F3FA" font-weight="650" >Space</text>
+<text x="349" y="36" font-size="15" fill="#B9BDD2" font-weight="550" text-anchor="end">Enabled</text>
+</g>
+<g transform="translate(1160 465) scale(1)">
+<rect x="0" y="0" width="368" height="61" rx="9" fill="#25283A" stroke="#3C4058"/>
+<circle cx="23" cy="30" r="7" fill="#75C7FF"/>
+<text x="42" y="37" font-size="18" fill="#F3F3FA" font-weight="650" >Ocean</text>
+<text x="349" y="36" font-size="15" fill="#B9BDD2" font-weight="550" text-anchor="end">Enabled</text>
+</g>
+<path d="M1160 558H1528" fill="none" stroke="#3C4058" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+<text x="1160" y="604" font-size="15" fill="#B9BDD2" font-weight="500" >Selected category</text>
+<text x="1160" y="637" font-size="25" fill="#F3F3FA" font-weight="700" >Fruit</text>
+<text x="1160" y="685" font-size="15" fill="#B9BDD2" font-weight="500" >Match rule</text>
+<rect x="1160" y="700" width="368" height="49" rx="8" fill="#25283A" stroke="#3C4058"/>
+<text x="1176" y="730" font-size="17" fill="#F3F3FA" font-weight="500" >Group by category</text>
+<path d="M1497 719l7 7 7 -7" fill="none" stroke="#B9BDD2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+<rect x="1348" y="24" width="224" height="42" rx="10" fill="#282541" stroke="#8170FB"/>
+<text x="1460" y="51" font-size="15" fill="#F3F3FA" font-weight="750" text-anchor="middle" letter-spacing="1">ILLUSTRATIVE MOCKUP</text>
+</svg>
