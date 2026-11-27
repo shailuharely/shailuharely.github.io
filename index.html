@@ -11,10 +11,10 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%236952F5' d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z'/></svg>">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=6">
+  <meta name="theme-color" content="#0E0F17">
+  <link rel="stylesheet" href="styles.css?v=7">
   <script>document.documentElement.classList.add('js')</script>
-  <script src="main.js?v=6" defer></script>
-  <script src="arcade.js?v=6" defer></script>
+  <script src="main.js?v=7" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -25,7 +25,6 @@
   <nav id="menu">
     <a href="#work">Work</a>
     <a href="#games">Games</a>
-    <a href="#play">Play</a>
     <a href="#about">Skills</a>
     <a href="#journey">Journey</a>
     <a class="pill" href="#contact">Contact</a>
@@ -41,7 +40,6 @@
       <p class="lead">I've spent the last 4+ years designing mobile games, including Category Sort, a hybrid casual puzzle game with 1M+ downloads.</p>
       <div class="actions">
         <a class="btn" href="#work">View my work</a>
-        <a class="btn alt" href="#play">▶ Play a demo</a>
         <a class="btn alt" href="assets/C-Hemasailesh-Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
       </div>
     </div>
@@ -150,50 +148,12 @@
         <div class="links"><a href="https://play.google.com/store/apps/details?id=com.meemeegames.holedrop" target="_blank" rel="noopener" aria-label="Hole Drop on Google Play">Google Play ↗</a></div>
       </li>
       <li class="card next-card">
-        <span class="big" aria-hidden="true">▶</span>
-        <h3>Your turn to play</h3>
-        <p>Two quick browser puzzles.</p>
-        <a class="btn lime" href="#play">Open the arcade</a>
+        <span class="big" aria-hidden="true">✦</span>
+        <h3>Making a puzzle game?</h3>
+        <p>Let's talk about your next project.</p>
+        <a class="btn lime" href="#contact">Get in touch</a>
       </li>
     </ul>
-  </section>
-
-  <section class="section arcade-zone" id="play">
-    <div class="wrap">
-      <p class="eyebrow">Playground</p>
-      <h2>Play the mechanics</h2>
-      <p class="sub">Two small puzzles made for this portfolio. They are not shipped games.</p>
-      <div class="tabs" role="tablist" aria-label="Mini-games">
-        <button role="tab" id="tab-twins" aria-controls="panel-twins" aria-selected="true">Mirror Twins</button>
-        <button role="tab" id="tab-mix" aria-controls="panel-mix" aria-selected="false" tabindex="-1">Light Mixer</button>
-      </div>
-
-      <div class="sound-row"><button type="button" class="btn ghost small" id="sound" aria-pressed="false">🔇 Sound off</button></div>
-
-      <div class="console">
-        <div role="tabpanel" id="panel-twins" aria-labelledby="tab-twins">
-          <p class="how">One control moves both twins. Up and down match; left and right are mirrored. Get A and B to their homes at the same time.</p>
-          <div class="hud"><span>Level: <b id="twins-level"></b></span><span>Moves: <b id="twins-moves">0</b></span><span>Best: <b id="twins-best">–</b></span><button type="button" class="btn small ghost" id="twins-undo">↶ Undo</button><button type="button" class="btn small ghost" id="twins-reset">Restart</button></div>
-          <div class="twins-board" id="twins-board" role="img" tabindex="0"></div>
-          <div class="pad" aria-label="Move the twins. Directions are for twin A.">
-            <button type="button" class="btn ghost" data-move="up" aria-label="Up">▲</button>
-            <button type="button" class="btn ghost" data-move="left" aria-label="Left for A, right for B">◀</button>
-            <button type="button" class="btn ghost" data-move="down" aria-label="Down">▼</button>
-            <button type="button" class="btn ghost" data-move="right" aria-label="Right for A, left for B">▶</button>
-          </div>
-          <p class="status" id="twins-status" role="status"></p>
-          <button type="button" class="btn lime wide" id="twins-next" hidden>Next level →</button>
-        </div>
-
-        <div role="tabpanel" id="panel-mix" aria-labelledby="tab-mix" hidden>
-          <p class="how">Drag the lamps until every spot gets exactly the colour on its label.</p>
-          <div class="hud"><span>Level: <b id="mix-level"></b></span><span>Spots correct: <b id="mix-count"></b></span><button type="button" class="btn small ghost" id="mix-reset">Restart</button></div>
-          <div class="mix-stage" id="mix-stage"></div>
-          <p class="status" id="mix-status" role="status"></p>
-          <button type="button" class="btn lime wide" id="mix-next" hidden>Next level →</button>
-        </div>
-      </div>
-    </div>
   </section>
 
   <section class="wrap section" id="about">

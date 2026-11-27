@@ -35,22 +35,6 @@ if (box) {
 // Animations
 const calmMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Geometric confetti from the middle of an element
-window.burst = el => {
-  if (calmMotion) return;
-  const r = el.getBoundingClientRect();
-  const colours = ['#6952F5', '#D5F45B', '#FF8A65', '#75C7FF', '#FFD166'];
-  for (let i = 0; i < 36; i++) {
-    const bit = document.createElement('span');
-    bit.className = 'confetti';
-    bit.style.cssText = 'left:' + (r.left + r.width / 2) + 'px;top:' + (r.top + r.height / 2) + 'px;background:' +
-      colours[i % 5] + ';border-radius:' + (i % 3 ? '3px' : '50%') +
-      ';--x:' + (Math.random() * 420 - 210) + 'px;--y:' + (Math.random() * 360 - 220) + 'px';
-    document.body.appendChild(bit);
-    setTimeout(() => bit.remove(), 1000);
-  }
-};
-
 // Scroll progress bar
 const progress = document.querySelector('.progress');
 if (progress) {
@@ -87,7 +71,7 @@ const revealer = new IntersectionObserver(entries => entries.forEach(e => {
   };
   requestAnimationFrame(step);
 }), { threshold: 0.12 });
-document.querySelectorAll('.stats>div, .logos, main h2, .feature, .role-box li, .games .card, .console, .bento .card, .timeline li, .quote, .contact, .challenge, .case figure, .grad figure')
+document.querySelectorAll('.stats>div, .logos, main h2, .feature, .role-box li, .games .card, .bento .card, .timeline li, .quote, .contact, .challenge, .case figure, .grad figure')
   .forEach((el, i) => {
     el.classList.add('reveal');
     el.style.transitionDelay = (i % 4) * 60 + 'ms';
